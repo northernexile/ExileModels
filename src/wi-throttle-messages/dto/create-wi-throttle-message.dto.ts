@@ -1,1 +1,3 @@
-export class CreateWiThrottleMessageDto {}
+export class CreateWiThrottleMessageDto {
+    message:string
+}

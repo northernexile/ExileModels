@@ -1,12 +1,16 @@
-import { Controller } from '@nestjs/common';
+import {Controller, Dependencies} from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { WiThrottleMessagesService } from './wi-throttle-messages.service';
 import { CreateWiThrottleMessageDto } from './dto/create-wi-throttle-message.dto';
 import { UpdateWiThrottleMessageDto } from './dto/update-wi-throttle-message.dto';
 
 @Controller()
+@Dependencies(WiThrottleMessagesService)
+
 export class WiThrottleMessagesController {
-  constructor(private readonly wiThrottleMessagesService: WiThrottleMessagesService) {}
+  constructor(private readonly wiThrottleMessagesService: WiThrottleMessagesService) {
+    this.wiThrottleMessagesService = wiThrottleMessagesService
+  }
 
   @MessagePattern('createWiThrottleMessage')
   create(@Payload() createWiThrottleMessageDto: CreateWiThrottleMessageDto) {
