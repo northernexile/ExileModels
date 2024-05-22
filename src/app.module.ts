@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import {DevtoolsModule} from "@nestjs/devtools-integration";
 import { WiThrottleModule } from './wi-throttle/wi-throttle.module';
 import { WiThrottleMessagesModule } from './wi-throttle-messages/wi-throttle-messages.module';
+import { DirectoryService } from './directory/directory.service';
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { WiThrottleMessagesModule } from './wi-throttle-messages/wi-throttle-mes
     WiThrottleMessagesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DirectoryService],
 })
 export class AppModule {}

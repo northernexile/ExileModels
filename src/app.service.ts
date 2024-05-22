@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import DirectoryItemList from "./directory/dto/directory.item.list.dto";
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getServices() :any[] {
+    return DirectoryItemList
   }
 }
