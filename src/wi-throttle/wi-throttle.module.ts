@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { WiThrottleMessage} from "../wi-throttle-messages/entities/wi-throttle-message.entity";
+import {WiThrottleMessagesController} from "../wi-throttle-messages/wi-throttle-messages.controller";
+import {WiThrottleMessagesService} from "../wi-throttle-messages/wi-throttle-messages.service";
 
 @Module({
-    controllers:[WiThrottleMessage]
+    controllers:[WiThrottleMessagesController],
+    providers:[WiThrottleMessagesService]
 })
-export class WiThrottleModule {
-
-}
+export class WiThrottleModule {}
