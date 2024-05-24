@@ -8,6 +8,8 @@ import { DirectoryService } from './directory/directory.service';
 import { SerialModule } from './serial/serial.module';
 import { SerialHandlerService } from './serial/serial-handler.service';
 import {SerialController} from "./serial/serial.controller";
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import {RouterModule} from "@nestjs/core";
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
@@ -22,6 +24,24 @@ import { UsersModule } from './users/users.module';
     SerialModule,
     AuthModule,
     UsersModule,
+    ConfigModule.forRoot({isGlobal:true}),
+    TypeOrmModule.forRootAsync({
+      imports:[ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get('DATABASE_HOST'),
+        port: configService.get('DATABASE_PORT'),
+        username: configService.get('DATABASE_USER'),
+        password: configService.get('DATABASE_PASSWORD'),
+        database: configService.get('DATABASE_NAME'),
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        logging: true,
+        synchronize: false,
+        migrationsTableName: 'typeorm_migrations',
+        migrationsRun: false,
+      }),
+      inject: [ConfigService],
+    })
   ],
   controllers: [AppController,SerialController],
   providers: [AppService, DirectoryService, SerialHandlerService],
