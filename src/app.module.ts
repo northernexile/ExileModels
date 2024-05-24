@@ -5,6 +5,10 @@ import {DevtoolsModule} from "@nestjs/devtools-integration";
 import { WiThrottleModule } from './wi-throttle/wi-throttle.module';
 import { WiThrottleMessagesModule } from './wi-throttle-messages/wi-throttle-messages.module';
 import { DirectoryService } from './directory/directory.service';
+import { SerialModule } from './serial/serial.module';
+import { SerialHandlerService } from './serial/serial-handler.service';
+import {SerialController} from "./serial/serial.controller";
+import {RouterModule} from "@nestjs/core";
 
 @Module({
   imports: [
@@ -13,8 +17,9 @@ import { DirectoryService } from './directory/directory.service';
     }),
     WiThrottleModule,
     WiThrottleMessagesModule,
+    SerialModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, DirectoryService],
+  controllers: [AppController,SerialController],
+  providers: [AppService, DirectoryService, SerialHandlerService],
 })
 export class AppModule {}
