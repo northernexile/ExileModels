@@ -26,11 +26,12 @@ export class Users1716551620741 implements MigrationInterface {
                   },
                   {
                       name:'createdAt',
-                      type:'varchar'
+                      type:'timestamp',
+                      default:'now()'
                   },
                   {
                       name:'updatedAt',
-                      type:'varchar',
+                      type:'timestamp',
                       isNullable:true
                   }
               ],
