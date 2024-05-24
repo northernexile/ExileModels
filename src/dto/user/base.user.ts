@@ -4,7 +4,7 @@ export class BaseUser {
   @ApiProperty()
   id?: string;
   @ApiProperty()
-  username?: string;
+  name?: string;
   @ApiProperty()
   email: string;
   @ApiProperty()

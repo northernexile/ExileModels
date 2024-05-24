@@ -5,7 +5,7 @@ export class UserEntity {
   @ObjectIdColumn()
   id: ObjectId;
   @Column()
-  username: string;
+  name: string;
   @Column()
   email: string;
   @Column()
