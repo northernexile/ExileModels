@@ -29,8 +29,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         username: configService.get('DATABASE_USER'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
-        entities: [],
-        synchronize: true,
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        logging: true,
+        synchronize: false,
+        migrationsTableName: 'typeorm_migrations',
+        migrationsRun: false,
       }),
       inject: [ConfigService],
     })
