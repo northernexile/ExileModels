@@ -9,6 +9,8 @@ import { SerialModule } from './serial/serial.module';
 import { SerialHandlerService } from './serial/serial-handler.service';
 import {SerialController} from "./serial/serial.controller";
 import {RouterModule} from "@nestjs/core";
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import {RouterModule} from "@nestjs/core";
     WiThrottleModule,
     WiThrottleMessagesModule,
     SerialModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController,SerialController],
   providers: [AppService, DirectoryService, SerialHandlerService],
