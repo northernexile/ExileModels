@@ -1,2 +1,5 @@
 ### GET request to ExileModels Server root - this is a list of application routes
 GET http://localhost:3000
+
+### GET request to list serial ports
+GET http://localhost:3000/serial
