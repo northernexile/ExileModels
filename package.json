@@ -23,6 +23,8 @@
     "migration:down": "ts-node node_modules/typeorm/cli.js migration:revert -d src/shared/utils/datasource.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@jorgebodega/typeorm-factory": "^2.0.0",
     "@jorgebodega/typeorm-seeding": "^7.0.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.2",

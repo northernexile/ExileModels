@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('user_roles')
-class UserRole {
+export class UserRoleEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
