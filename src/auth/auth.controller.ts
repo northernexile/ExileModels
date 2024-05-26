@@ -18,7 +18,7 @@ export class AuthController {
     description: "User found",
     type: [BaseUser],
   })
-  signIn(@Body() signInDto: Record<string, any>) {
+  async signIn(@Body() signInDto: Record<string, any>) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
@@ -31,7 +31,7 @@ export class AuthController {
     description: "User Registered",
     type: [BaseUser],
   })
-  signUp(@Body() signUpDto: Record<string, any>) {
+  async signUp(@Body() signUpDto: Record<string, any>) {
     const payload = {
       username: signUpDto.username,
       email: signUpDto.email,

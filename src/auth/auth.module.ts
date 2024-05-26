@@ -8,14 +8,20 @@ import {APP_GUARD} from '@nestjs/core';
 import {AuthGuard} from './auth.guard'
 import {UserEntity} from '../entities/user.entity';
 import {TypeOrmModule} from '@nestjs/typeorm';
+import * as process from 'node:process';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports:[
     UsersModule,
-    JwtModule.register({
-      global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '1d' },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        global:true,
+        secret: process.env.JWT_SECRET,
+        signOptions: { expiresIn: '1d' },
+      }),
+      inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([UserEntity]),
   ],

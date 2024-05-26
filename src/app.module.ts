@@ -10,12 +10,12 @@ import { SerialHandlerService } from './serial/serial-handler.service';
 import {SerialController} from "./serial/serial.controller";
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {RouterModule} from "@nestjs/core";
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({isGlobal:true}),
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
     }),
@@ -24,7 +24,6 @@ import { UsersModule } from './users/users.module';
     SerialModule,
     AuthModule,
     UsersModule,
-    ConfigModule.forRoot({isGlobal:true}),
     TypeOrmModule.forRootAsync({
       imports:[ConfigModule],
       useFactory: (configService: ConfigService) => ({

@@ -10,7 +10,9 @@ export class UserRoles1716554144251 implements MigrationInterface {
                     {
                         name: 'id',
                         type: 'int',
-                        isPrimary: true
+                        isPrimary: true,
+                        isGenerated: true,
+                        generationStrategy: "increment"
                     },
                     {
                         name:'userId',

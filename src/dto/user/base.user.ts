@@ -1,16 +1,19 @@
 
 import { ApiProperty } from '@nestjs/swagger';
+import { Column } from 'typeorm';
 export class BaseUser {
   @ApiProperty()
-  id?: string;
+  @Column({ type: 'int',nullable:true })
+  id?: number;
   @ApiProperty()
-  name?: string;
+  @Column({ type: 'varchar' ,nullable:false})
+  username: string;
   @ApiProperty()
+  @Column({ type: 'varchar' ,nullable:false})
   email: string;
   @ApiProperty()
+  @Column({ type: 'varchar' ,nullable:false})
   password: string;
   @ApiProperty()
   confirmPassword?: string;
-  @ApiProperty()
-  designation?: string;
 }

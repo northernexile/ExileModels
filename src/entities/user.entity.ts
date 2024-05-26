@@ -1,17 +1,19 @@
 
-import { Column, Entity, ObjectId, ObjectIdColumn } from 'typeorm';
-@Entity()
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { hashPassword as Hash}  from '../auth/password.hash'
+
+@Entity('users')
 export class UserEntity {
-  @ObjectIdColumn()
-  id: ObjectId;
-  @Column()
-  name: string;
-  @Column()
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
+  @Column({type:'varchar',nullable:false})
+  username: string;
+  @Column({type:'varchar',nullable:false})
   email: string;
-  @Column()
+  @Column({type:'varchar',nullable:false})
   password: string;
-  @Column()
+  @Column({type:'timestamp',nullable:false})
   createdAt: Date;
-  @Column()
+  @Column({type:'timestamp',nullable:false})
   updatedAt: Date;
 }
