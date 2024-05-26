@@ -10,10 +10,12 @@ export class Users1716551620741 implements MigrationInterface {
                   {
                       name: 'id',
                       type: 'int',
-                      isPrimary: true
+                      isPrimary: true,
+                      isGenerated: true,
+                      generationStrategy: "increment"
                   },
                   {
-                      name:'name',
+                      name:'username',
                       type:'varchar'
                   },
                   {

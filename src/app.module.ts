@@ -10,16 +10,20 @@ import { SerialHandlerService } from './serial/serial-handler.service';
 import {SerialController} from "./serial/serial.controller";
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({isGlobal:true}),
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
     }),
     WiThrottleModule,
     WiThrottleMessagesModule,
     SerialModule,
-    ConfigModule.forRoot({isGlobal:true}),
+    AuthModule,
+    UsersModule,
     TypeOrmModule.forRootAsync({
       imports:[ConfigModule],
       useFactory: (configService: ConfigService) => ({
