@@ -1,6 +1,5 @@
 
-import { BeforeInsert, Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
-import { hashPassword as Hash}  from '../auth/password.hash'
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class UserEntity {
@@ -20,6 +19,6 @@ export class UserEntity {
   @Column({type:'timestamp',nullable:false})
   createdAt: Date;
 
-  @Column({type:'timestamp',nullable:false})
+  @Column({type:'timestamp',nullable:true})
   updatedAt: Date;
 }
