@@ -31,6 +31,11 @@ export class AuthService {
   }
 
   async signUp(payload: CreateUserDto) {
+    const user = await this.usersService.findOneBy(payload.email);
+
+    if (user) {
+      throw new UnauthorizedException('Already registered')
+    }
     try {
       return this.usersService.create(payload)
     } catch (err) {
