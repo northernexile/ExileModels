@@ -3,6 +3,8 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {AuthService} from './auth.service';
 import {Public} from "./public-strategy";
 import {BaseUser} from '../dto/user/base.user';
+import { SignInDto } from '../dto/auth/sign.in';
+import { SignUpDto } from '../dto/auth/sign.up';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -18,7 +20,7 @@ export class AuthController {
     description: "User found",
     type: [BaseUser],
   })
-  async signIn(@Body() signInDto: Record<string, any>) {
+  async signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
@@ -31,7 +33,7 @@ export class AuthController {
     description: "User Registered",
     type: [BaseUser],
   })
-  async signUp(@Body() signUpDto: Record<string, any>) {
+  async signUp(@Body() signUpDto: SignUpDto) {
     const payload = {
       username: signUpDto.username,
       email: signUpDto.email,
