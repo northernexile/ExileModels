@@ -131,3 +131,4 @@ dist
 
 # misc
 .idea/*
+http/http-client.private.env.json
