@@ -5,11 +5,14 @@ import {Public} from "./public-strategy";
 import {BaseUser} from '../dto/user/base.user';
 import { SignInDto } from '../dto/auth/sign.in';
 import { SignUpDto } from '../dto/auth/sign.up';
+import { ForgottenUserDto } from '../dto/auth/forgotten.user';
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService
+  ) {}
 
   @Public()
   @HttpCode(HttpStatus.OK)
@@ -43,4 +46,15 @@ export class AuthController {
     return this.authService.signUp(payload);
   }
 
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @Post('forgotten')
+  @ApiOperation({summary:'Forgotten password'})
+  @ApiResponse({
+    status:200,
+    description:"Forgotten password"
+  })
+  async forgottenPassword(@Body() forgottenUserDto:ForgottenUserDto) {
+    return this.authService.forgottenPassword(forgottenUserDto)
+  }
 }

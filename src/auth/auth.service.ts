@@ -1,10 +1,20 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpCode, HttpStatus,
+  Injectable,
+  NotFoundException,
+  ServiceUnavailableException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUserDto } from '../dto/user/create.user';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { matchPassword } from './password.hash';
 import { RolesService } from '../roles/roles.service';
 import { UsersRolesService } from '../users/roles/users.roles.service';
+import { ForgottenUserDto } from '../dto/auth/forgotten.user';
+import { UserEntity } from '../entities/user.entity';
+import * as process from 'node:process';
+import { ForgottenPasswordTemplateDto } from '../dto/auth/email/forgotten.password.template';
 
 @Injectable()
 export class AuthService {
@@ -58,5 +68,35 @@ export class AuthService {
     } catch (err) {
       throw new UnauthorizedException(err)
     }
+  }
+
+  async forgottenPassword(payload:ForgottenUserDto) {
+    const user = await this.usersService.findOneBy(payload.email)
+    if (!user) {
+      throw new NotFoundException('User not found.')
+    }
+
+    const token = this.createToken({id:user.id,email:user.email},user)
+    const link = `${process.env.PROTOCOL}://${process.env.BASE_URL}/auth/reset/${user.id}/${token}`;
+    const template:ForgottenPasswordTemplateDto = {
+      email:user.email,
+      name:user.username,
+      link:link
+    }
+    //Do email service
+
+
+    throw new ServiceUnavailableException({
+      code:HttpStatus.SERVICE_UNAVAILABLE,message:'Service unavailable'
+    })
+  }
+
+  createToken(payload:object,user:UserEntity) {
+    return this.jwtService.sign(payload,{
+      secret:JSON.stringify({
+        secret:process.env.JWT_SECRET,
+        updatedAt:user.updatedAt ?? ''
+      })
+    })
   }
 }
