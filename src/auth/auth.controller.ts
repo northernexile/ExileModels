@@ -6,6 +6,7 @@ import {BaseUser} from '../dto/user/base.user';
 import { SignInDto } from '../dto/auth/sign.in';
 import { SignUpDto } from '../dto/auth/sign.up';
 import { ForgottenUserDto } from '../dto/auth/forgotten.user';
+import { ResetEmailSentDto } from '../dto/auth/email/reset.email.sent';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -52,7 +53,8 @@ export class AuthController {
   @ApiOperation({summary:'Forgotten password'})
   @ApiResponse({
     status:200,
-    description:"Forgotten password"
+    description:"Forgotten password",
+    type:[ResetEmailSentDto]
   })
   async forgottenPassword(@Body() forgottenUserDto:ForgottenUserDto) {
     return this.authService.forgottenPassword(forgottenUserDto)

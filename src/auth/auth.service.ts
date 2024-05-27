@@ -16,6 +16,7 @@ import { UserEntity } from '../entities/user.entity';
 import * as process from 'node:process';
 import { ForgottenPasswordTemplateDto } from '../dto/auth/email/forgotten.password.template';
 import { MailService } from '../mail/mail.service';
+import { ResetEmailSentDto } from '../dto/auth/email/reset.email.sent';
 
 @Injectable()
 export class AuthService {
@@ -72,14 +73,14 @@ export class AuthService {
     }
   }
 
-  async forgottenPassword(payload:ForgottenUserDto) {
+  async forgottenPassword(payload:ForgottenUserDto):Promise<ResetEmailSentDto> {
     const user = await this.usersService.findOneBy(payload.email)
     if (!user) {
       throw new NotFoundException('User not found.')
     }
 
     const token = this.createToken({id:user.id,email:user.email},user)
-    const link = `${process.env.PROTOCOL}://${process.env.BASE_URL}/auth/reset/${user.id}/${token}`;
+    const link = `${process.env.PROTOCOL}://${process.env.FRONT}/password/reset/${user.id}/${token}`;
     const template:ForgottenPasswordTemplateDto = {
       email:user.email,
       name:user.username,
@@ -87,7 +88,12 @@ export class AuthService {
     }
 
     if( await this.mailService.sendPasswordResetEmail(template)) {
-      return true
+      const response:ResetEmailSentDto = {
+        email:user.email,
+        message:'Check your inbox for a reset email'
+      }
+
+      return response
     }
     throw new ServiceUnavailableException({
       code:HttpStatus.SERVICE_UNAVAILABLE,message:'Service unavailable'
