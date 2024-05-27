@@ -10,10 +10,14 @@ import {UserEntity} from '../entities/user.entity';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import * as process from 'node:process';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { RolesModule } from '../roles/roles.module';
+import { UsersRolesModule } from '../users/roles/users.roles.module';
 
 @Module({
   imports:[
     UsersModule,
+    RolesModule,
+    UsersRolesModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
