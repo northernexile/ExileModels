@@ -1,4 +1,6 @@
 import {
+  ConflictException,
+  ForbiddenException,
   HttpCode, HttpStatus,
   Injectable,
   NotFoundException,
@@ -8,7 +10,7 @@ import {
 import { CreateUserDto } from '../dto/user/create.user';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { matchPassword } from './password.hash';
+import { hashPassword, matchPassword } from './password.hash';
 import { RolesService } from '../roles/roles.service';
 import { UsersRolesService } from '../users/roles/users.roles.service';
 import { ForgottenUserDto } from '../dto/auth/forgotten.user';
@@ -17,11 +19,15 @@ import * as process from 'node:process';
 import { ForgottenPasswordTemplateDto } from '../dto/auth/email/forgotten.password.template';
 import { MailService } from '../mail/mail.service';
 import { ResetEmailSentDto } from '../dto/auth/email/reset.email.sent';
+import { ResetUserPasswordDto } from '../dto/auth/reset.user.password';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AuthService {
 
   constructor(
+    @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
     private usersService: UsersService,
     private rolesService: RolesService,
     private userRolesService: UsersRolesService,
@@ -88,16 +94,45 @@ export class AuthService {
     }
 
     if( await this.mailService.sendPasswordResetEmail(template)) {
-      const response:ResetEmailSentDto = {
+      return  {
         email:user.email,
         message:'Check your inbox for a reset email'
       }
-
-      return response
     }
     throw new ServiceUnavailableException({
       code:HttpStatus.SERVICE_UNAVAILABLE,message:'Service unavailable'
     })
+  }
+
+  async resetPassword(userId:number,token:string,payload:ResetUserPasswordDto) {
+    const user = await this.usersService.findOneById(userId)
+
+    if(!user) {
+      throw new NotFoundException({code:HttpStatus.NOT_FOUND,message:'User not found'})
+    }
+
+    try {
+      const secret = JSON.stringify({
+        secret: process.env.JWT_SECRET,
+        updatedAt: user.updatedAt,
+      });
+      this.jwtService.verify(token, {
+        secret,
+      });
+    } catch (err) {
+      throw new ForbiddenException({code:HttpStatus.FORBIDDEN,message:'Token expired/invalid'})
+    }
+
+    if (payload.password !== payload.confirmPassword) {
+      throw new ConflictException({code:HttpStatus.CONFLICT,message:'Passwords do not match.'})
+    }
+    const hashedPassword = hashPassword(payload.password)
+    const newUser = this.userRepository.create({password:hashedPassword})
+    if (! await this.userRepository.update(user.id,newUser)) {
+      throw new ServiceUnavailableException({code:HttpStatus.SERVICE_UNAVAILABLE,message:'Service unavailable'})
+    }
+
+    return {code:HttpStatus.NO_CONTENT,message:'Password updated'}
   }
 
   createToken(payload:object,user:UserEntity) {

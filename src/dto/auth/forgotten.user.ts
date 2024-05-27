@@ -3,6 +3,6 @@ import { Column } from 'typeorm';
 
 export class ForgottenUserDto {
   @ApiProperty()
-  @Column({type:'varchar',nullable:false})
+  @Column({type:'string',nullable:false})
   email:string
 }

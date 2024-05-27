@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column } from 'typeorm';
 
-export class ResetEmailSentDto {
+export class ResetUserPasswordDto {
   @ApiProperty({type:'string'})
   @Column()
-  email:string
+  password:string
 
   @ApiProperty({type:'string'})
   @Column()
-  message:string
+  confirmPassword:string
 }
