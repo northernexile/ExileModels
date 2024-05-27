@@ -32,7 +32,7 @@ export class AuthController {
   @Post("register")
   @ApiOperation({ summary: "User registration" })
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: "User Registered",
     type: [BaseUser],
   })
