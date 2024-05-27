@@ -14,6 +14,10 @@ export class UsersService {
   async findOneBy(email: string): Promise<UserEntity | undefined | null> {
     return await this.userRepository.findOneBy({ email: email });
   }
+
+  async findOneById(id:number) : Promise<UserEntity | undefined | null> {
+    return await this.userRepository.findOneBy({id:id})
+  }
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = hashPassword(createUserDto.password)
     return this.userRepository.save({

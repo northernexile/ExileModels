@@ -1,5 +1,5 @@
 ### POST signup
-POST {{host}}:{{port}}/auth/register
+POST https://{{host}}:{{port}}/auth/register
 Content-Type: application/json
 
 {
@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ### POST Login
-POST {{host}}:{{port}}/auth/login
+POST https://{{host}}:{{port}}/auth/login
 Content-Type: application/json
 
 {
@@ -18,9 +18,9 @@ Content-Type: application/json
   "password": "{{password}}"
 }
 ### GET request to ExileModels Server root - this is a list of application routes
-GET http://{{host}}:{{port}}
+GET https://{{host}}:{{port}}
 Authorization: Bearer {{token}}
 
 ### GET request to list serial ports
-GET http://{{host}}:{{port}}/serial
+GET https://{{host}}:{{port}}/serial
 Authorization: Bearer {{token}}

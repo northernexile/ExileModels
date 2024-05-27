@@ -1,10 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {SwaggerModule,DocumentBuilder} from '@nestjs/swagger';
+import * as fs from 'fs';
+import * as process from 'node:process';
 
 async function bootstrap() {
+  const certKey = process.env.KEY_LOCATION ?? './src/cert/key.pem'
+  const certLocation = process.env.CERT_LOCATION ?? './src/cert/cert.pem'
+
+  const httpsOptions = {
+    key:fs.readFileSync(certKey),
+    cert:fs.readFileSync(certLocation)
+  }
   const app = await NestFactory.create(AppModule,{
-    snapshot:true
+    snapshot:true,
+    httpsOptions
   });
 
   const config = new DocumentBuilder()
