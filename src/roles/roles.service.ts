@@ -14,6 +14,10 @@ export class RolesService {
     return await this.roleRepository.findOneBy({name:name})
   }
 
+  async getGuestRole() :Promise<RoleEntity|undefined|null>{
+    return this.findOneBy('Guest')
+  }
+
   async create(createRoleDto:CreateRoleDto) {
     return this.roleRepository.save(createRoleDto);
   }
