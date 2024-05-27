@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from '../dto/user/create.user';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { matchPassword,hashPassword } from './password.hash';
+import { matchPassword } from './password.hash';
 import { RolesService } from '../roles/roles.service';
 import { UsersRolesService } from '../users/roles/users.roles.service';
 
