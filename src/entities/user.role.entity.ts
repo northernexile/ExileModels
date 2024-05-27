@@ -6,10 +6,10 @@ export class UserRoleEntity {
   id: number;
 
   @Column({type:'bigint',nullable:false})
-  userId: string
+  userId: number
 
   @Column({type:'bigint',nullable:false})
-  roleId: string
+  roleId: number
 
   @Column({type:'timestamp',nullable:false})
   createdAt: Date;

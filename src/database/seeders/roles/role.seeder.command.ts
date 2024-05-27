@@ -3,7 +3,6 @@ import { Logger } from '@nestjs/common';
 import {RolesService} from '../../../roles/roles.service';
 import { CreateRoleDto } from '../../../dto/role/create.role';
 const tableName:string = 'roles'
-const errorMessage:string = 'Missing role seed data.'
 const finishedSeedingMessage:string = 'Finished seeding roles'
 
 @Command({
