@@ -15,6 +15,7 @@ import { ForgottenUserDto } from '../dto/auth/forgotten.user';
 import { UserEntity } from '../entities/user.entity';
 import * as process from 'node:process';
 import { ForgottenPasswordTemplateDto } from '../dto/auth/email/forgotten.password.template';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +24,8 @@ export class AuthService {
     private usersService: UsersService,
     private rolesService: RolesService,
     private userRolesService: UsersRolesService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private mailService: MailService
   ) {}
   async signIn(email :string, password:string) {
     const user = await this.usersService.findOneBy(email);
@@ -83,9 +85,10 @@ export class AuthService {
       name:user.username,
       link:link
     }
-    //Do email service
 
-
+    if( await this.mailService.sendPasswordResetEmail(template)) {
+      return true
+    }
     throw new ServiceUnavailableException({
       code:HttpStatus.SERVICE_UNAVAILABLE,message:'Service unavailable'
     })

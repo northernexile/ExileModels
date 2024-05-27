@@ -14,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { UsersRolesModule } from './users/roles/users.roles.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { UsersRolesModule } from './users/roles/users.roles.module';
       }),
       inject: [ConfigService],
     }),
+    MailModule,
   ],
   controllers: [AppController,SerialController],
   providers: [AppService, DirectoryService, SerialHandlerService],
