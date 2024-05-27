@@ -12,6 +12,8 @@ import * as process from 'node:process';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RolesModule } from '../roles/roles.module';
 import { UsersRolesModule } from '../users/roles/users.roles.module';
+import { MailModule } from '../mail/mail.module';
+import { MailService } from '../mail/mail.service';
 
 @Module({
   imports:[
@@ -19,7 +21,10 @@ import { UsersRolesModule } from '../users/roles/users.roles.module';
     RolesModule,
     UsersRolesModule,
     JwtModule.registerAsync({
-      imports: [ConfigModule],
+      imports: [
+        ConfigModule,
+        MailModule
+      ],
       useFactory: async (configService: ConfigService) => ({
         global:true,
         secret: process.env.JWT_SECRET,
@@ -35,7 +40,8 @@ import { UsersRolesModule } from '../users/roles/users.roles.module';
       provide:APP_GUARD,
       useClass:AuthGuard
     },
-    AuthService
+    AuthService,
+    MailService
   ]
 })
 export class AuthModule {}
