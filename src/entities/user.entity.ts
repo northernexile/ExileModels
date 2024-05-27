@@ -16,6 +16,9 @@ export class UserEntity {
   @Column({type:'varchar',nullable:false})
   password: string;
 
+  @Column({type:'timestamp',nullable:true,default:null})
+  verifiedAt: string
+
   @Column({type:'timestamp',nullable:false})
   createdAt: Date;
 

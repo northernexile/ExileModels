@@ -127,7 +127,7 @@ export class AuthService {
       throw new ConflictException({code:HttpStatus.CONFLICT,message:'Passwords do not match.'})
     }
     const hashedPassword = hashPassword(payload.password)
-    const newUser = this.userRepository.create({password:hashedPassword})
+    const newUser = this.userRepository.create({password:hashedPassword,updatedAt: new Date()})
     if (! await this.userRepository.update(user.id,newUser)) {
       throw new ServiceUnavailableException({code:HttpStatus.SERVICE_UNAVAILABLE,message:'Service unavailable'})
     }
