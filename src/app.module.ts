@@ -40,7 +40,7 @@ import { UsersModule } from './users/users.module';
         migrationsRun: false,
       }),
       inject: [ConfigService],
-    })
+    }),
   ],
   controllers: [AppController,SerialController],
   providers: [AppService, DirectoryService, SerialHandlerService],
