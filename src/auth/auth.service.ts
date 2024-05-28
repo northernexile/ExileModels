@@ -22,6 +22,11 @@ import { ResetEmailSentDto } from '../dto/auth/email/reset.email.sent';
 import { ResetUserPasswordDto } from '../dto/auth/reset.user.password';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { WelcomeEmailDto } from '../dto/auth/email/welcome.email';
+import UpdatedResponse from '../services/responses/updated.response';
+import SuccessResponse from '../services/responses/success.response';
+import CreatedResponse from '../services/responses/created.response';
+import { VerifiedEmailDto } from '../dto/auth/email/verified.email';
 
 @Injectable()
 export class AuthService {
@@ -34,6 +39,28 @@ export class AuthService {
     private jwtService: JwtService,
     private mailService: MailService
   ) {}
+
+  private async checkUserAndToken(userId:number,token:string) {
+    const user = await this.usersService.findOneById(userId)
+
+    if(!user) {
+      throw new NotFoundException({code:HttpStatus.NOT_FOUND,message:'User not found'})
+    }
+
+    try {
+      const secret = JSON.stringify({
+        secret: process.env.JWT_SECRET,
+        updatedAt: user.updatedAt,
+      });
+      this.jwtService.verify(token, {
+        secret,
+      });
+    } catch (err) {
+      throw new ForbiddenException({code:HttpStatus.FORBIDDEN,message:'Token expired/invalid'})
+    }
+
+    return user
+  }
   async signIn(email :string, password:string) {
     const user = await this.usersService.findOneBy(email);
 
@@ -48,10 +75,9 @@ export class AuthService {
     }
 
     const payload = { sub: user.id, username: user.username };
+    const token = await this.jwtService.signAsync(payload);
 
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+    return SuccessResponse('User authenticate',{access_token:token})
   }
 
   async signUp(payload: CreateUserDto) {
@@ -70,10 +96,28 @@ export class AuthService {
             roleId:guestRole.id,
             createdAt:new Date()
           })
+
+          const token = this.createToken({id:savedUser.id,email:savedUser.email},savedUser)
+          const link = `${process.env.PROTOCOL}://${process.env.FRONT}/user/verify/${savedUser.id}/${token}`;
+
+          const verification : WelcomeEmailDto = {
+            name:savedUser.username,
+            email:savedUser.email,
+            link:link
+          }
+
+          if (await this.mailService.sendVerificationEmail(verification)) {
+            return CreatedResponse(
+              'Please check your email for a verification email to complete your registration',
+              {
+                name:savedUser.username,
+                id:savedUser.id,
+                email:savedUser.email
+              }
+            )
+          }
         }
       }
-
-      return savedUser
     } catch (err) {
       throw new UnauthorizedException(err)
     }
@@ -105,36 +149,38 @@ export class AuthService {
   }
 
   async resetPassword(userId:number,token:string,payload:ResetUserPasswordDto) {
-    const user = await this.usersService.findOneById(userId)
-
-    if(!user) {
-      throw new NotFoundException({code:HttpStatus.NOT_FOUND,message:'User not found'})
-    }
-
-    try {
-      const secret = JSON.stringify({
-        secret: process.env.JWT_SECRET,
-        updatedAt: user.updatedAt,
-      });
-      this.jwtService.verify(token, {
-        secret,
-      });
-    } catch (err) {
-      throw new ForbiddenException({code:HttpStatus.FORBIDDEN,message:'Token expired/invalid'})
-    }
-
-    if (payload.password !== payload.confirmPassword) {
-      throw new ConflictException({code:HttpStatus.CONFLICT,message:'Passwords do not match.'})
-    }
+    const user = await this.checkUserAndToken(userId,token)
     const hashedPassword = hashPassword(payload.password)
-    const newUser = this.userRepository.create({password:hashedPassword})
+    const newUser = this.userRepository.create({password:hashedPassword,updatedAt: new Date()})
     if (! await this.userRepository.update(user.id,newUser)) {
       throw new ServiceUnavailableException({code:HttpStatus.SERVICE_UNAVAILABLE,message:'Service unavailable'})
     }
 
-    return {code:HttpStatus.NO_CONTENT,message:'Password updated'}
+    return UpdatedResponse('Password Updated')
   }
 
+  async verify(userId:number,token:string) {
+    const user = await this.checkUserAndToken(userId,token)
+    const dateTime = new Date()
+    const newUser = this.userRepository.create({createdAt:dateTime,updatedAt:dateTime})
+    if (! await this.userRepository.update(user.id,newUser)) {
+      throw new ServiceUnavailableException({code:HttpStatus.SERVICE_UNAVAILABLE,message:'Service unavailable'})
+    }
+
+    const verifiedData:VerifiedEmailDto = {
+      name:user.username,
+      email:user.email
+    }
+
+    if (!await this.mailService.sendVerifiedEmail(verifiedData)) {
+      throw new ServiceUnavailableException({
+        code:HttpStatus.SERVICE_UNAVAILABLE,
+        message:'Service Unavailable'
+      })
+    }
+
+    return UpdatedResponse('User email verified.')
+  }
   createToken(payload:object,user:UserEntity) {
     return this.jwtService.sign(payload,{
       secret:JSON.stringify({
