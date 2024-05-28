@@ -19,6 +19,7 @@ import { JwtModule } from '@nestjs/jwt';
 import * as process from 'node:process';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { RoleGuard } from './auth/role/role.guard';
+import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
@@ -64,7 +65,7 @@ import { RoleGuard } from './auth/role/role.guard';
       inject: [ConfigService],
     })
   ],
-  controllers: [AppController,SerialController],
+  controllers: [AppController,SerialController, UsersController],
   providers: [AppService, DirectoryService, SerialHandlerService,JwtStrategy,RoleGuard],
 })
 export class AppModule {}

@@ -5,6 +5,7 @@ import {UserEntity} from '../entities/user.entity';
 import { UsersCommands } from './users.commands';
 import { RolesModule } from '../roles/roles.module';
 import { UsersRolesModule } from './roles/users.roles.module';
+import { UsersController } from './users.controller';
 
 
 @Module({
@@ -15,5 +16,6 @@ import { UsersRolesModule } from './roles/users.roles.module';
     UsersRolesModule,
     TypeOrmModule.forFeature([UserEntity]),
   ],
+  controllers:[UsersController]
 })
 export class UsersModule {}
