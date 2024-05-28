@@ -1,4 +1,4 @@
-import { Body, Controller, Post, HttpCode, HttpStatus, Patch } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus, Patch, Param } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {AuthService} from './auth.service';
 import {Public} from "./public-strategy";
@@ -82,7 +82,7 @@ export class AuthController {
     description:"Reset password",
     type:[ResetUserPasswordDto]
   })
-  async resetPassword(id:number,token:string,@Body() resetUserPasswordDto :ResetUserPasswordDto) {
+  async resetPassword(@Param('id') id:number,@Param('token') token:string,@Body() resetUserPasswordDto :ResetUserPasswordDto) {
     return this.authService.resetPassword(id,token,resetUserPasswordDto)
   }
 
@@ -107,7 +107,7 @@ export class AuthController {
     description:"Verified user",
     type:[ResetUserPasswordDto]
   })
-  async verify(id:number,token:string) {
+  async verify(@Param('id') id:number,@Param('token') token:string) {
     return  await this.authService.verify(id,token)
   }
 }
