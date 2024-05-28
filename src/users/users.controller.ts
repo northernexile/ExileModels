@@ -3,7 +3,7 @@ import {
   Controller, Delete,
   Get,
   HttpStatus,
-  NotFoundException,
+  NotFoundException, Param,
   Patch,
   Post, ServiceUnavailableException,
   UnauthorizedException,
@@ -54,10 +54,13 @@ export class UsersController {
   })
   @UseGuards(JwtAuthGuard,RoleGuard)
   @Roles('Admin')
-  async getById(userId:number) {
+  async getById(@Param('userId') userId:number) {
     const user = await this.usersService.findOneById(userId)
 
+
+
     if (user) {
+      user.password = ''
       return userResponse(HttpStatus.OK,'user found',user)
     }
 
@@ -75,7 +78,7 @@ export class UsersController {
   })
   @UseGuards(JwtAuthGuard,RoleGuard)
   @Roles('Admin')
-  async create(createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.create(createUserDto)
 
     if (! user) {
@@ -108,7 +111,7 @@ export class UsersController {
   })
   @UseGuards(JwtAuthGuard,RoleGuard)
   @Roles('Admin')
-  async update(userId:number,@Body() updateUserDto:UpdateUserDto) {
+  async update(@Param('userId') userId:number,@Body() updateUserDto:UpdateUserDto) {
     const user = await this.usersService.update(userId,updateUserDto)
 
     if (! user ) {
@@ -144,7 +147,7 @@ export class UsersController {
   })
   @UseGuards(JwtAuthGuard,RoleGuard)
   @Roles('Admin')
-  async delete(userId:number) {
+  async delete(@Param('userId') userId:number) {
     const deleted = await this.usersService.delete(userId)
 
     if(!deleted) {

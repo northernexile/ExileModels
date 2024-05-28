@@ -3,7 +3,7 @@ import {
   Controller, Delete,
   Get,
   HttpStatus,
-  NotFoundException,
+  NotFoundException, Param,
   Patch,
   Post, ServiceUnavailableException,
   UnauthorizedException, UseGuards,
@@ -50,7 +50,7 @@ export class RoleController {
   })
   @UseGuards(JwtAuthGuard,RoleGuard)
   @Roles('Admin','Guest')
-  async getById(roleId:number) {
+  async getById(@Param('roleId') roleId:number) {
     const role = await this.rolesService.findOneById(roleId)
     if (role) {
       return roleResponse(HttpStatus.OK,'Role found', role)
@@ -80,21 +80,21 @@ export class RoleController {
     return roleResponse(HttpStatus.CREATED,'Role created',role)
   }
 
-  @Patch('{id}')
+  @Patch(':id')
   @ApiBearerAuth()
   @ApiResponse({
     status:HttpStatus.NO_CONTENT,
     description:'Update a role'
   })
   @ApiParam({
-    name:'id',
+    name:'roleId',
     description:'The role id',
     required:true,
     type:'Number'
   })
   @UseGuards(JwtAuthGuard,RoleGuard)
   @Roles('Admin','Guest')
-  async update(roleId:number,@Body() updateRoleDto: UpdateRoleDto) {
+  async update(@Param('roleId') roleId:number,@Body() updateRoleDto: UpdateRoleDto) {
     const role = await this.rolesService.update(roleId,updateRoleDto)
 
     if (! role ) {
@@ -107,21 +107,21 @@ export class RoleController {
     return roleResponse(HttpStatus.NO_CONTENT,'Role updated',role)
   }
 
-  @Delete('{id}')
+  @Delete(':roleId')
   @ApiBearerAuth()
   @ApiResponse({
     status:HttpStatus.NO_CONTENT,
     description:'delete a role'
   })
   @ApiParam({
-    name:'id',
+    name:'roleId',
     description:'The role id',
     required:true,
     type:'Number'
   })
   @UseGuards(JwtAuthGuard,RoleGuard)
   @Roles('Admin')
-  async delete(roleId:number) {
+  async delete(@Param('roleId') roleId:number) {
     const deleted = await this.rolesService.delete(roleId)
 
     if(!deleted) {
