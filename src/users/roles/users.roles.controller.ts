@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Inject, Param, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, HttpStatus, Inject, Param, Post, UseGuards } from '@nestjs/common';
 import { UsersRolesService } from './users.roles.service';
 import { JwtAuthGuard } from '../../auth/jwt.guard';
 import { RoleGuard } from '../../auth/role/role.guard';
@@ -27,7 +27,6 @@ export class UsersRolesController {
     required:true,
     type:'Number'
   })
-  @UseGuards(JwtAuthGuard)
   @Roles('Admin','Guest')
   async findAll(@Param('userId') userId:number) {
     console.log(userId)
@@ -41,4 +40,51 @@ export class UsersRolesController {
     return SuccessResponse('Application user roles',response)
   }
 
+  @UseGuards(JwtAuthGuard,RoleGuard)
+  @Post(':userId/role/:roleId/add')
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: "Add role to user",
+  })
+  @ApiParam({
+    name:'userId',
+    description:'The user id',
+    required:true,
+    type:'Number'
+  })
+  @ApiParam({
+    name:'roleId',
+    description:'The role id',
+    required:true,
+    type:'Number'
+  })
+  @Roles('Admin')
+  async addRole(@Param('userId') userId:number,@Param('roleId') roleId:number) {
+
+  }
+
+  @UseGuards(JwtAuthGuard,RoleGuard)
+  @Delete(':userId/role/:roleId/add')
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+    description: "detach role from user",
+  })
+  @ApiParam({
+    name:'userId',
+    description:'The user id',
+    required:true,
+    type:'Number'
+  })
+  @ApiParam({
+    name:'roleId',
+    description:'The role id',
+    required:true,
+    type:'Number'
+  })
+  @Roles('Admin')
+  async deleteRole(@Param('userId') userId:number,@Param('roleId') roleId:number) {
+
+  }
 }
