@@ -30,7 +30,7 @@ export class AuthController {
   }
 
   @Public()
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.CREATED)
   @Post("register")
   @ApiOperation({ summary: "User registration" })
   @ApiResponse({

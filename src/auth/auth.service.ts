@@ -74,10 +74,47 @@ export class AuthService {
       throw new UnauthorizedException('no match')
     }
 
-    const payload = { sub: user.id, username: user.username };
+    const rolesForUser = await this.userRolesService.findRolesByUserId(user.id)
+    if (!rolesForUser) {
+      throw new ForbiddenException({
+        code:HttpStatus.FORBIDDEN,
+        message:'No roles found for user'
+      })
+    }
+
+
+    const roleNames:string[] = []
+    for (const userRoleEntity of rolesForUser) {
+      let role = await this.rolesService.findOneById(userRoleEntity.roleId)
+      if (role) {
+        roleNames.push(role.name)
+      }
+    }
+
+    const payload = {
+      userId: user.id,
+      username: user.username,
+      roles:roleNames
+    };
     const token = await this.jwtService.signAsync(payload);
 
-    return SuccessResponse('User authenticate',{access_token:token})
+    if(! token) {
+      throw new ServiceUnavailableException({
+        code:HttpStatus.SERVICE_UNAVAILABLE,
+        message:'Could not create access token'
+      })
+    }
+    const userData = {
+      access_token:token,
+      user: {
+        id:user.id,
+        email:user.email,
+        name:user.username,
+        roles:roleNames
+      }
+    }
+
+    return SuccessResponse('User authenticate',userData)
   }
 
   async signUp(payload: CreateUserDto) {
@@ -185,7 +222,7 @@ export class AuthService {
     return this.jwtService.sign(payload,{
       secret:JSON.stringify({
         secret:process.env.JWT_SECRET,
-        updatedAt:user.updatedAt ?? ''
+        updatedAt:user.updatedAt ?? '',
       })
     })
   }
