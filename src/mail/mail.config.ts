@@ -4,10 +4,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 
 export class MailerConfig implements MailerOptionsFactory {
   createMailerOptions(): MailerOptions | Promise<MailerOptions> {
-    console.log('pre-user')
-    console.log(process.env.MAIL_USER); // should have value
-    console.log('post user')
-    const options = {
+    return  {
       transport: {
         port:Number(process.env.MAIL_PORT),
         host:String(process.env.MAIL_HOST),
@@ -27,9 +24,5 @@ export class MailerConfig implements MailerOptionsFactory {
         },
       },
     };
-
-    console.log(options)
-
-    return options
   }
 }

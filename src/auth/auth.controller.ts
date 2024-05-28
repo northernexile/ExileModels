@@ -78,7 +78,7 @@ export class AuthController {
     type:'String'
   })
   @ApiResponse({
-    status:HttpStatus.OK,
+    status:HttpStatus.NO_CONTENT,
     description:"Reset password",
     type:[ResetUserPasswordDto]
   })
@@ -86,5 +86,28 @@ export class AuthController {
     return this.authService.resetPassword(id,token,resetUserPasswordDto)
   }
 
-
+  @Public()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Patch('verify/:id/:token')
+  @ApiOperation({summary:'Verify user'})
+  @ApiParam({
+    name:'id',
+    description:'The user id',
+    required:true,
+    type:'Number'
+  })
+  @ApiParam({
+    name:'token',
+    description:'verify user by token',
+    required:true,
+    type:'String'
+  })
+  @ApiResponse({
+    status:HttpStatus.NO_CONTENT,
+    description:"Verified user",
+    type:[ResetUserPasswordDto]
+  })
+  async verify(id:number,token:string) {
+    return  await this.authService.verify(id,token)
+  }
 }
