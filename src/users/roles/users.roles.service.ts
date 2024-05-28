@@ -15,9 +15,8 @@ export class UsersRolesService {
   }
 
   async findRolesByUserId(userId:number) {
-    return  await this.userRoleRepository.find({
-      where:{userId:userId}
-    })
+    return  await this.userRoleRepository.createQueryBuilder('userRoles')
+      .where("userRoles.userId = :userId", { userId: userId }).getMany()
   }
 
   async findExisting(userId:number,roleId:number):Promise<UserRoleEntity|null> {
