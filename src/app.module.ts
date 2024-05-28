@@ -15,6 +15,10 @@ import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { UsersRolesModule } from './users/roles/users.roles.module';
 import { MailModule } from './mail/mail.module';
+import { JwtModule } from '@nestjs/jwt';
+import * as process from 'node:process';
+import { JwtStrategy } from './auth/jwt.strategy';
+import { RoleGuard } from './auth/role/role.guard';
 
 @Module({
   imports: [
@@ -47,8 +51,20 @@ import { MailModule } from './mail/mail.module';
       inject: [ConfigService],
     }),
     MailModule,
+    JwtModule.registerAsync({
+      imports: [
+        ConfigModule,
+        MailModule
+      ],
+      useFactory: async (configService: ConfigService) => ({
+        global:true,
+        secret: process.env.JWT_SECRET,
+        signOptions: { expiresIn: '1d' },
+      }),
+      inject: [ConfigService],
+    })
   ],
   controllers: [AppController,SerialController],
-  providers: [AppService, DirectoryService, SerialHandlerService],
+  providers: [AppService, DirectoryService, SerialHandlerService,JwtStrategy,RoleGuard],
 })
 export class AppModule {}
