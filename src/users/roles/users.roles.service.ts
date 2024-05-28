@@ -2,7 +2,7 @@ import {  Injectable } from '@nestjs/common';
 import { InjectRepository} from '@nestjs/typeorm';
 import {CreateUserRoleDto } from '../../dto/user/role/create.user.role';
 import {UserRoleEntity } from '../../entities/user.role.entity';
-import {MongoRepository} from 'typeorm';
+import { Equal, MongoRepository } from 'typeorm';
 
 @Injectable()
 export class UsersRolesService {
@@ -15,8 +15,9 @@ export class UsersRolesService {
   }
 
   async findRolesByUserId(userId:number) {
-    return  await this.userRoleRepository.createQueryBuilder('userRoles')
-      .where("userRoles.userId = :userId", { userId: userId }).getMany()
+    return  await this.userRoleRepository.find({
+      where: { userId: Equal(userId) },
+    })
   }
 
   async findExisting(userId:number,roleId:number):Promise<UserRoleEntity|null> {

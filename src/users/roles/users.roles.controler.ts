@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Inject, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Inject, Param, UseGuards } from '@nestjs/common';
 import { UsersRolesService } from './users.roles.service';
 import { JwtAuthGuard } from '../../auth/jwt.guard';
 import { RoleGuard } from '../../auth/role/role.guard';
@@ -29,7 +29,8 @@ export class UsersRolesController {
   })
   @UseGuards(JwtAuthGuard)
   @Roles('Admin','Guest')
-  async findAll(userId:number) {
+  async findAll(@Param('userId') userId:number) {
+    console.log(userId)
     const userRoles = await this.userRolesService.findRolesByUserId(userId);
     const allRoles = await this.rolesService.findAll()
     const response = {
