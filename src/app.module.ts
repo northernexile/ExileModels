@@ -18,6 +18,7 @@ import { MailModule } from './mail/mail.module';
 import { JwtModule } from '@nestjs/jwt';
 import * as process from 'node:process';
 import { JwtStrategy } from './auth/jwt.strategy';
+import { RoleGuard } from './auth/role/role.guard';
 
 @Module({
   imports: [
@@ -64,6 +65,6 @@ import { JwtStrategy } from './auth/jwt.strategy';
     })
   ],
   controllers: [AppController,SerialController],
-  providers: [AppService, DirectoryService, SerialHandlerService,JwtStrategy],
+  providers: [AppService, DirectoryService, SerialHandlerService,JwtStrategy,RoleGuard],
 })
 export class AppModule {}

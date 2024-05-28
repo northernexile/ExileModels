@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {  Injectable } from '@nestjs/common';
 import { InjectRepository} from '@nestjs/typeorm';
 import {CreateUserRoleDto } from '../../dto/user/role/create.user.role';
 import {UserRoleEntity } from '../../entities/user.role.entity';
@@ -8,10 +8,16 @@ import {MongoRepository} from 'typeorm';
 export class UsersRolesService {
   constructor(
     @InjectRepository(UserRoleEntity)
-    private userRoleRepository: MongoRepository<UserRoleEntity>
+    private userRoleRepository: MongoRepository<UserRoleEntity>,
   ) { }
   async findOneBy(id: number): Promise<UserRoleEntity | undefined | null> {
     return await this.userRoleRepository.findOneBy({id:id})
+  }
+
+  async findRolesByUserId(userId:number) {
+    return  await this.userRoleRepository.find({
+      where:{userId:userId}
+    })
   }
 
   async findExisting(userId:number,roleId:number):Promise<UserRoleEntity|null> {

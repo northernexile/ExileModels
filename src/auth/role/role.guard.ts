@@ -8,6 +8,9 @@ export class RoleGuard implements CanActivate {
   constructor(private reflector:Reflector) {}
 
   matchRoles(roles: string[], userRoles:string[]):boolean {
+    if(!userRoles) {
+      return false
+    }
     return roles.some((role) => userRoles.includes(role))
   }
   canActivate(

@@ -15,6 +15,7 @@ import { UsersRolesModule } from '../users/roles/users.roles.module';
 import { MailModule } from '../mail/mail.module';
 import { MailService } from '../mail/mail.service';
 import { JwtStrategy } from './jwt.strategy';
+import { RoleGuard } from './role/role.guard';
 
 @Module({
   imports:[
@@ -41,6 +42,7 @@ import { JwtStrategy } from './jwt.strategy';
       provide:APP_GUARD,
       useClass:AuthGuard
     },
+    RoleGuard,
     AuthService,
     MailService,
     JwtStrategy
