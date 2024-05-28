@@ -22,6 +22,8 @@ import { ResetEmailSentDto } from '../dto/auth/email/reset.email.sent';
 import { ResetUserPasswordDto } from '../dto/auth/reset.user.password';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { VerifyUserDto } from '../dto/user/verify.user';
+import { WelcomeEmailDto } from '../dto/auth/email/welcome.email';
 
 @Injectable()
 export class AuthService {
@@ -70,6 +72,22 @@ export class AuthService {
             roleId:guestRole.id,
             createdAt:new Date()
           })
+
+          const token = this.createToken({id:savedUser.id,email:savedUser.email},savedUser)
+          const link = `${process.env.PROTOCOL}://${process.env.FRONT}/user/verify/${savedUser.id}/${token}`;
+
+          const verification : WelcomeEmailDto = {
+            name:savedUser.username,
+            email:savedUser.email,
+            link:link
+          }
+
+          if (await this.mailService.sendVerificationEmail(verification)) {
+            return {
+              code:HttpStatus.OK,
+              message:'Please check your email for a verification email to complete your registration'
+            }
+          }
         }
       }
 
