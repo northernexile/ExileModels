@@ -133,7 +133,4 @@ export class RoleController {
 
     return roleResponse(HttpStatus.NO_CONTENT,'Deleted role',{})
   }
-
-
-
 }
