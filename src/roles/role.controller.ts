@@ -4,9 +4,9 @@ import {
   Get,
   HttpStatus,
   NotFoundException,
-  Param, Patch,
+  Patch,
   Post, ServiceUnavailableException,
-  UnauthorizedException,
+  UnauthorizedException, UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { RolesService } from './roles.service';
@@ -15,6 +15,7 @@ import { RoleEntity } from '../entities/role.entity';
 import roleResponse from './role.response';
 import { CreateRoleDto } from '../dto/role/create.role';
 import { UpdateRoleDto } from '../dto/role/update.role';
+import { JwtAuthGuard } from '../auth/jwt.guard';
 
 @Controller('roles')
 export class RoleController {
@@ -26,6 +27,7 @@ export class RoleController {
     status: HttpStatus.OK,
     description: "List of roles",
   })
+  @UseGuards(JwtAuthGuard)
   async findAll() {
     return SuccessResponse('Application user roles',await this.rolesService.findAll())
   }
@@ -42,6 +44,7 @@ export class RoleController {
     required:true,
     type:'Number'
   })
+  @UseGuards(JwtAuthGuard)
   async getById(roleId:number) {
     const role = await this.rolesService.findOneById(roleId)
     if (role) {
@@ -60,6 +63,7 @@ export class RoleController {
     status:HttpStatus.CREATED,
     description:'Create a role'
   })
+  @UseGuards(JwtAuthGuard)
   async create(createRoleDto: CreateRoleDto) {
     const role = await this.rolesService.create(createRoleDto)
 
@@ -82,6 +86,7 @@ export class RoleController {
     required:true,
     type:'Number'
   })
+  @UseGuards(JwtAuthGuard)
   async update(roleId:number,@Body() updateRoleDto: UpdateRoleDto) {
     const role = await this.rolesService.update(roleId,updateRoleDto)
 
@@ -107,8 +112,9 @@ export class RoleController {
     required:true,
     type:'Number'
   })
-  async delete(roleid:number) {
-    const deleted = await this.rolesService.delete(roleid)
+  @UseGuards(JwtAuthGuard)
+  async delete(roleId:number) {
+    const deleted = await this.rolesService.delete(roleId)
 
     if(!deleted) {
       throw new ServiceUnavailableException({
