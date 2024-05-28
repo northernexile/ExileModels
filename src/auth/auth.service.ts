@@ -77,7 +77,23 @@ export class AuthService {
     const payload = { sub: user.id, username: user.username };
     const token = await this.jwtService.signAsync(payload);
 
-    return SuccessResponse('User authenticate',{access_token:token})
+    if(! token) {
+      throw new ServiceUnavailableException({
+        code:HttpStatus.SERVICE_UNAVAILABLE,
+        message:'Could not create access token'
+      })
+    }
+    const userData = {
+      access_token:token,
+      user: {
+        id:user.id,
+        email:user.email,
+        name:user.username,
+        roles:[]
+      }
+    }
+
+    return SuccessResponse('User authenticate',userData)
   }
 
   async signUp(payload: CreateUserDto) {
@@ -185,7 +201,7 @@ export class AuthService {
     return this.jwtService.sign(payload,{
       secret:JSON.stringify({
         secret:process.env.JWT_SECRET,
-        updatedAt:user.updatedAt ?? ''
+        updatedAt:user.updatedAt ?? '',
       })
     })
   }
