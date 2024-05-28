@@ -84,14 +84,13 @@ export class AuthService {
 
           if (await this.mailService.sendVerificationEmail(verification)) {
             return {
-              code:HttpStatus.OK,
-              message:'Please check your email for a verification email to complete your registration'
+              code:HttpStatus.CREATED,
+              message:'Please check your email for a verification email to complete your registration',
+              data:savedUser
             }
           }
         }
       }
-
-      return savedUser
     } catch (err) {
       throw new UnauthorizedException(err)
     }
