@@ -2,6 +2,7 @@ import {
   Controller,
   HttpStatus,
   Post,
+  UnprocessableEntityException,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -15,6 +16,7 @@ import { RoleGuard } from '../auth/role/role.guard';
 import { FileUploadDto } from '../dto/file/file.upload';
 import { ParseFilePipeBuilder } from '@nestjs/common';
 import Limits from './limits';
+import CustomResponse from 'src/services/responses/custom.response';
 
 @Controller('file')
 export class FileUploadController {
@@ -39,6 +41,15 @@ export class FileUploadController {
     file: Express.Multer.File,
     fileUploadDto: FileUploadDto,
   ) {
-    return await this.fileUploadService.uploadFile(file, fileUploadDto);
+    const result = await this.fileUploadService.uploadFile(file, fileUploadDto);
+
+    if (!result) {
+      throw new UnprocessableEntityException({
+        code: HttpStatus.UNPROCESSABLE_ENTITY,
+        message: 'Coud not upload file',
+      });
+    }
+
+    return CustomResponse(HttpStatus.CREATED, 'File uploaded', result);
   }
 }
