@@ -12,12 +12,12 @@ export class AppController {
   @ApiBearerAuth()
   @Get()
   @ApiResponse({
-    status:200,
-    description:"List of API routes",
-    type:[DirectoryItemDto]
+    status: 200,
+    description: 'List of API routes',
+    type: [DirectoryItemDto],
   })
   @UseGuards(JwtAuthGuard)
   getServices(): DirectoryItemDto[] {
-    return this.appService.getServices()
+    return this.appService.getServices();
   }
 }

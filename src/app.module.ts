@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {DevtoolsModule} from "@nestjs/devtools-integration";
+import { DevtoolsModule } from '@nestjs/devtools-integration';
 import { WiThrottleModule } from './wi-throttle/wi-throttle.module';
 import { WiThrottleMessagesModule } from './wi-throttle-messages/wi-throttle-messages.module';
 import { DirectoryService } from './directory/directory.service';
 import { SerialModule } from './serial/serial.module';
 import { SerialHandlerService } from './serial/serial-handler.service';
-import {SerialController} from "./serial/serial.controller";
+import { SerialController } from './serial/serial.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
@@ -24,7 +24,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal:true}),
+    ConfigModule.forRoot({ isGlobal: true }),
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
     }),
@@ -36,7 +36,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     RolesModule,
     UsersRolesModule,
     TypeOrmModule.forRootAsync({
-      imports:[ConfigModule],
+      imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
         host: configService.get('DATABASE_HOST'),
@@ -54,20 +54,23 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     }),
     MailModule,
     JwtModule.registerAsync({
-      imports: [
-        ConfigModule,
-        MailModule
-      ],
+      imports: [ConfigModule, MailModule],
       useFactory: async (configService: ConfigService) => ({
-        global:true,
+        global: true,
         secret: process.env.JWT_SECRET,
         signOptions: { expiresIn: '1d' },
       }),
       inject: [ConfigService],
     }),
-    FileUploadModule
+    FileUploadModule,
   ],
-  controllers: [AppController,SerialController, UsersController],
-  providers: [AppService, DirectoryService, SerialHandlerService,JwtStrategy,RoleGuard],
+  controllers: [AppController, SerialController, UsersController],
+  providers: [
+    AppService,
+    DirectoryService,
+    SerialHandlerService,
+    JwtStrategy,
+    RoleGuard,
+  ],
 })
 export class AppModule {}

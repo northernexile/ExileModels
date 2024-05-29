@@ -1,7 +1,7 @@
-import { registerAs } from "@nestjs/config";
+import { registerAs } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
-import { DataSource, DataSourceOptions } from "typeorm";
-import {join} from 'path';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { join } from 'path';
 
 dotenvConfig({ path: '.env' });
 
@@ -16,7 +16,7 @@ const config = {
   migrations: [join(__dirname, '/../../', 'database/migrations/**/*{.ts,.js}')],
   autoLoadEntities: true,
   synchronize: false,
-}
+};
 
-export default registerAs('typeorm', () => config)
+export default registerAs('typeorm', () => config);
 export const connectionSource = new DataSource(config as DataSourceOptions);

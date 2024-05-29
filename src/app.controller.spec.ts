@@ -16,7 +16,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should be called"', () => {
-      expect(appController.getServices()).toHaveBeenCalled()
+      expect(appController.getServices()).toHaveBeenCalled();
     });
   });
 });

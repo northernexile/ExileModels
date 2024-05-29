@@ -8,13 +8,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailerConfig } from './mail.config';
 
 @Module({
-  imports:[
+  imports: [
     ConfigModule,
     MailerModule.forRootAsync({
-      useClass:MailerConfig
-    })
+      useClass: MailerConfig,
+    }),
   ],
   providers: [MailService],
-  exports:[MailService]
+  exports: [MailService],
 })
 export class MailModule {}

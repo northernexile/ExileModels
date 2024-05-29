@@ -11,7 +11,9 @@ describe('WiThrottleMessagesController', () => {
       providers: [WiThrottleMessagesService],
     }).compile();
 
-    controller = module.get<WiThrottleMessagesController>(WiThrottleMessagesController);
+    controller = module.get<WiThrottleMessagesController>(
+      WiThrottleMessagesController,
+    );
   });
 
   it('should be defined', () => {

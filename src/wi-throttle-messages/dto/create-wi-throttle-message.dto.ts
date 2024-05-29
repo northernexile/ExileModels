@@ -1,3 +1,3 @@
 export class CreateWiThrottleMessageDto {
-    message:string
+  message: string;
 }

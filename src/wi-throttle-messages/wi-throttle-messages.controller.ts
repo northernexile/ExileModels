@@ -1,4 +1,4 @@
-import {Controller, Dependencies} from '@nestjs/common';
+import { Controller, Dependencies } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { WiThrottleMessagesService } from './wi-throttle-messages.service';
 import { CreateWiThrottleMessageDto } from './dto/create-wi-throttle-message.dto';
@@ -6,10 +6,11 @@ import { UpdateWiThrottleMessageDto } from './dto/update-wi-throttle-message.dto
 
 @Controller()
 @Dependencies(WiThrottleMessagesService)
-
 export class WiThrottleMessagesController {
-  constructor(private readonly wiThrottleMessagesService: WiThrottleMessagesService) {
-    this.wiThrottleMessagesService = wiThrottleMessagesService
+  constructor(
+    private readonly wiThrottleMessagesService: WiThrottleMessagesService,
+  ) {
+    this.wiThrottleMessagesService = wiThrottleMessagesService;
   }
 
   @MessagePattern('createWiThrottleMessage')
@@ -29,7 +30,10 @@ export class WiThrottleMessagesController {
 
   @MessagePattern('updateWiThrottleMessage')
   update(@Payload() updateWiThrottleMessageDto: UpdateWiThrottleMessageDto) {
-    return this.wiThrottleMessagesService.update(updateWiThrottleMessageDto.id, updateWiThrottleMessageDto);
+    return this.wiThrottleMessagesService.update(
+      updateWiThrottleMessageDto.id,
+      updateWiThrottleMessageDto,
+    );
   }
 
   @MessagePattern('removeWiThrottleMessage')

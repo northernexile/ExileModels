@@ -6,12 +6,12 @@ export class RoleEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column({type:'varchar',nullable:false})
-  name: string
+  @Column({ type: 'varchar', nullable: false })
+  name: string;
 
-  @Column({type:'timestamp',nullable:false})
+  @Column({ type: 'timestamp', nullable: false })
   createdAt: Date;
 
-  @Column({type:'timestamp',nullable:true})
+  @Column({ type: 'timestamp', nullable: true })
   updatedAt: Date;
 }

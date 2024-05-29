@@ -4,10 +4,10 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 
 export class MailerConfig implements MailerOptionsFactory {
   createMailerOptions(): MailerOptions | Promise<MailerOptions> {
-    return  {
+    return {
       transport: {
-        port:Number(process.env.MAIL_PORT),
-        host:String(process.env.MAIL_HOST),
+        port: Number(process.env.MAIL_PORT),
+        host: String(process.env.MAIL_HOST),
         auth: {
           user: process.env.MAIL_USER,
           pass: process.env.MAIL_PASSWORD,

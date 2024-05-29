@@ -2,11 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Column } from 'typeorm';
 
 export class VerifiedEmailDto {
-  @ApiProperty({type:'string'})
+  @ApiProperty({ type: 'string' })
   @Column()
-  name:string
+  name: string;
 
-  @ApiProperty({type:'string'})
+  @ApiProperty({ type: 'string' })
   @Column()
-  email:string
+  email: string;
 }

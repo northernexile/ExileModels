@@ -6,41 +6,42 @@ import { VerifiedEmailDto } from '../dto/auth/email/verified.email';
 
 @Injectable()
 export class MailService {
-  constructor(
-    private mailerService: MailerService) {}
+  constructor(private mailerService: MailerService) {}
 
-  async sendPasswordResetEmail(forgottenPassword:ForgottenPasswordTemplateDto) {
+  async sendPasswordResetEmail(
+    forgottenPassword: ForgottenPasswordTemplateDto,
+  ) {
     return await this.mailerService.sendMail({
-      to:forgottenPassword.email,
-      subject:'Have you requested a password reset?',
-      template:'./request.reset.hbs',
-      context:{
-        name:forgottenPassword.name,
-        link:forgottenPassword.link
-      }
-    })
+      to: forgottenPassword.email,
+      subject: 'Have you requested a password reset?',
+      template: './request.reset.hbs',
+      context: {
+        name: forgottenPassword.name,
+        link: forgottenPassword.link,
+      },
+    });
   }
 
-  async sendVerifiedEmail(welcomeEmail:VerifiedEmailDto) {
+  async sendVerifiedEmail(welcomeEmail: VerifiedEmailDto) {
     return await this.mailerService.sendMail({
-      to:welcomeEmail.email,
-      subject:'Welcome to exile models - Email verified',
-      template:'./verified.email.hbs',
-      context:{
-        name:welcomeEmail.name,
-      }
-    })
+      to: welcomeEmail.email,
+      subject: 'Welcome to exile models - Email verified',
+      template: './verified.email.hbs',
+      context: {
+        name: welcomeEmail.name,
+      },
+    });
   }
 
-  async sendVerificationEmail(welcomeEmail:WelcomeEmailDto) {
+  async sendVerificationEmail(welcomeEmail: WelcomeEmailDto) {
     return await this.mailerService.sendMail({
-      to:welcomeEmail.email,
-      subject:'Welcome to exile models',
-      template:'./welcome.email.hbs',
-      context:{
-        name:welcomeEmail.name,
-        link:welcomeEmail.link
-      }
-    })
+      to: welcomeEmail.email,
+      subject: 'Welcome to exile models',
+      template: './welcome.email.hbs',
+      context: {
+        name: welcomeEmail.name,
+        link: welcomeEmail.link,
+      },
+    });
   }
 }
