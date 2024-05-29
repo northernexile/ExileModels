@@ -3,9 +3,12 @@ import { Column } from 'typeorm';
 
 export class FileUploadDto {
   @ApiProperty()
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   relateToType?: number;
   @ApiProperty()
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   attachToEntityId?: number;
+  @ApiProperty()
+  @Column({ type: 'string', nullable: false })
+  title: string;
 }

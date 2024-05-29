@@ -20,11 +20,11 @@ import * as process from 'node:process';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { RoleGuard } from './auth/role/role.guard';
 import { UsersController } from './users/users.controller';
-import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    // eslint-disable-next-line prettier/prettier
+    ConfigModule.forRoot({isGlobal:true}),
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
     }),
@@ -55,6 +55,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     MailModule,
     JwtModule.registerAsync({
       imports: [ConfigModule, MailModule],
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       useFactory: async (configService: ConfigService) => ({
         global: true,
         secret: process.env.JWT_SECRET,
@@ -62,7 +63,6 @@ import { FileUploadModule } from './file-upload/file-upload.module';
       }),
       inject: [ConfigService],
     }),
-    FileUploadModule,
   ],
   controllers: [AppController, SerialController, UsersController],
   providers: [

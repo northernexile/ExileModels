@@ -1,12 +1,21 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('roles')
-export class RoleEntity {
+@Entity('files')
+export class FileEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
   @Column({ type: 'varchar', nullable: false })
-  name: string;
+  title: string;
+
+  @Column({ type: 'varchar', nullable: false })
+  path: string;
+
+  @Column({ type: 'varchar', nullable: false })
+  extension: string;
+
+  @Column({ type: 'bigint', nullable: false })
+  size: number;
 
   @Column({ type: 'timestamp', nullable: false })
   createdAt: Date;
