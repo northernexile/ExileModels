@@ -33,7 +33,6 @@ export class RoleController {
     status: HttpStatus.OK,
     description: 'List of roles',
   })
-  @UseGuards(JwtAuthGuard)
   @Roles('Admin', 'Guest')
   async findAll() {
     return SuccessResponse(

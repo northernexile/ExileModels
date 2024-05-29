@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Express } from 'express';
-import { FileUploadDto } from 'src/dto/file/file.upload';
+import { FileUploadDto } from '../dto/file/file.upload';
 
 @Injectable()
 export class FileUploadService {

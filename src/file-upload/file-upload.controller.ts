@@ -9,10 +9,10 @@ import {
 import { FileUploadService } from './file-upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
-import { Roles } from 'src/auth/roles/roles.decorator';
-import { JwtAuthGuard } from 'src/auth/jwt.guard';
-import { RoleGuard } from 'src/auth/role/role.guard';
-import { FileUploadDto } from 'src/dto/file/file.upload';
+import { Roles } from '../auth/roles/roles.decorator';
+import { JwtAuthGuard } from '../auth/jwt.guard';
+import { RoleGuard } from '../auth/role/role.guard';
+import { FileUploadDto } from '../dto/file/file.upload';
 
 @Controller('file')
 export class FileUploadController {
