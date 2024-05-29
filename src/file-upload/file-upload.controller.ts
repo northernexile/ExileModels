@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   HttpStatus,
   Post,
@@ -9,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { FileUploadService } from './file-upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiResponse } from '@nestjs/swagger';
 import { Roles } from '../auth/roles/roles.decorator';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RoleGuard } from '../auth/role/role.guard';
@@ -30,6 +31,7 @@ export class FileUploadController {
     description: 'File Upload',
   })
   @Roles('Admin', 'Guest')
+  @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
     @UploadedFile(
@@ -39,7 +41,7 @@ export class FileUploadController {
         .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY }),
     )
     file: Express.Multer.File,
-    fileUploadDto: FileUploadDto,
+    @Body() fileUploadDto: FileUploadDto,
   ) {
     const result = await this.fileUploadService.uploadFile(file, fileUploadDto);
 
