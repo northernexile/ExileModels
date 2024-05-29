@@ -20,6 +20,7 @@ import * as process from 'node:process';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { RoleGuard } from './auth/role/role.guard';
 import { UsersController } from './users/users.controller';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -63,7 +64,8 @@ import { UsersController } from './users/users.controller';
         signOptions: { expiresIn: '1d' },
       }),
       inject: [ConfigService],
-    })
+    }),
+    FileUploadModule
   ],
   controllers: [AppController,SerialController, UsersController],
   providers: [AppService, DirectoryService, SerialHandlerService,JwtStrategy,RoleGuard],
