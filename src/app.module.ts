@@ -20,6 +20,7 @@ import * as process from 'node:process';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { RoleGuard } from './auth/role/role.guard';
 import { UsersController } from './users/users.controller';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { UsersController } from './users/users.controller';
     UsersModule,
     RolesModule,
     UsersRolesModule,
+    FileUploadModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
