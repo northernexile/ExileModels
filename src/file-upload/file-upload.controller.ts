@@ -12,6 +12,7 @@ import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
+import { FileUploadDto } from 'src/dto/file/file.upload';
 
 @Controller('file')
 export class FileUploadController {
@@ -26,8 +27,11 @@ export class FileUploadController {
   })
   @Roles('Admin', 'Guest')
   @UseInterceptors(FileInterceptor('file')) // Intercept and handle file uploads
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    fileUploadDto: FileUploadDto,
+  ) {
     // Delegate file handling to the FileService
-    return await this.fileUploadService.uploadFile(file);
+    return await this.fileUploadService.uploadFile(file, fileUploadDto);
   }
 }
