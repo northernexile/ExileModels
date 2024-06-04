@@ -26,6 +26,8 @@ import { RoleController } from './roles/role.controller';
 import { ProductsService } from './products/products.service';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductCategoriesModule } from './product-categories/product-categories.module';
+import { ScalesModule } from './scales/scales.module';
+import { ProductScalesModule } from './product-scales/product-scales.module';
 
 @Module({
   imports: [
@@ -70,6 +72,8 @@ import { ProductCategoriesModule } from './product-categories/product-categories
     }),
     CategoriesModule,
     ProductCategoriesModule,
+    ScalesModule,
+    ProductScalesModule,
   ],
   controllers: [
     AppController,
