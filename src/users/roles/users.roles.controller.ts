@@ -21,99 +21,105 @@ import customResponse from '../../services/responses/custom.response';
 @Controller(['user/roles'])
 export class UsersRolesController {
   constructor(
-    private userRolesService:UsersRolesService,
-    private rolesService:RolesService
+    private userRolesService: UsersRolesService,
+    private rolesService: RolesService,
   ) {}
 
-  @UseGuards(JwtAuthGuard,RoleGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Get(':userId/list')
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.OK,
-    description: "List of user roles",
+    description: 'List of user roles',
   })
   @ApiParam({
-    name:'userId',
-    description:'The user id',
-    required:true,
-    type:'Number'
+    name: 'userId',
+    description: 'The user id',
+    required: true,
+    type: 'Number',
   })
-  @Roles('Admin','Guest')
-  async findAll(@Param('userId') userId:number) {
-    console.log(userId)
+  @Roles('Admin', 'Guest')
+  async findAll(@Param('userId') userId: number) {
+    console.log(userId);
     const userRoles = await this.userRolesService.findRolesByUserId(userId);
-    const allRoles = await this.rolesService.findAll()
+    const allRoles = await this.rolesService.findAll();
     const response = {
-      allRoles:allRoles,
-      userRoles:userRoles
-    }
+      allRoles: allRoles,
+      userRoles: userRoles,
+    };
 
-    return SuccessResponse('Application user roles',response)
+    return SuccessResponse('Application user roles', response);
   }
 
-  @UseGuards(JwtAuthGuard,RoleGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Post(':userId/role/:roleId/add')
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.CREATED,
-    description: "Add role to user",
+    description: 'Add role to user',
   })
   @ApiParam({
-    name:'userId',
-    description:'The user id',
-    required:true,
-    type:'Number'
+    name: 'userId',
+    description: 'The user id',
+    required: true,
+    type: 'Number',
   })
   @ApiParam({
-    name:'roleId',
-    description:'The role id',
-    required:true,
-    type:'Number'
+    name: 'roleId',
+    description: 'The role id',
+    required: true,
+    type: 'Number',
   })
   @Roles('Admin')
-  async addRole(@Param('userId') userId:number,@Param('roleId') roleId:number) {
-    const userRole = await this.userRolesService.addRole(userId,roleId)
+  async addRole(
+    @Param('userId') userId: number,
+    @Param('roleId') roleId: number,
+  ) {
+    const userRole = await this.userRolesService.addRole(userId, roleId);
 
-    if( userRole) {
-      return customResponse(HttpStatus.CREATED,'User role granted',userRole)
+    if (userRole) {
+      return customResponse(HttpStatus.CREATED, 'User role granted', userRole);
     }
 
     throw new ServiceUnavailableException({
-      code:HttpStatus.SERVICE_UNAVAILABLE,
-      message:'Unable to assign role'
-    })
+      code: HttpStatus.SERVICE_UNAVAILABLE,
+      message: 'Unable to assign role',
+    });
   }
 
-  @UseGuards(JwtAuthGuard,RoleGuard)
-  @Delete(':userId/role/:roleId/add')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Delete(':userId/role/:roleId/delete')
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.NO_CONTENT,
-    description: "detach role from user",
+    description: 'detach role from user',
   })
   @ApiParam({
-    name:'userId',
-    description:'The user id',
-    required:true,
-    type:'Number'
+    name: 'userId',
+    description: 'The user id',
+    required: true,
+    type: 'Number',
   })
   @ApiParam({
-    name:'roleId',
-    description:'The role id',
-    required:true,
-    type:'Number'
+    name: 'roleId',
+    description: 'The role id',
+    required: true,
+    type: 'Number',
   })
   @Roles('Admin')
-  async deleteRole(@Param('userId') userId:number,@Param('roleId') roleId:number) {
-    const deleted = await this.userRolesService.deleteRole(userId,roleId)
+  async deleteRole(
+    @Param('userId') userId: number,
+    @Param('roleId') roleId: number,
+  ) {
+    const deleted = await this.userRolesService.deleteRole(userId, roleId);
 
-    if (! deleted ) {
+    if (!deleted) {
       throw new ServiceUnavailableException({
-        code:HttpStatus.SERVICE_UNAVAILABLE,
-        message:'Could not detach role from user'
-      })
+        code: HttpStatus.SERVICE_UNAVAILABLE,
+        message: 'Could not detach role from user',
+      });
     }
 
-    return customResponse(HttpStatus.NO_CONTENT,'Role detached from user')
+    return customResponse(HttpStatus.NO_CONTENT, 'Role detached from user');
   }
 }
