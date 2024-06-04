@@ -17,7 +17,7 @@ import { CreateProductDto } from '../dto/product/create.product.dto';
 import { UpdateProductDto } from '../dto/product/update.product.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
-import { ApiBearerAuth, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import productResponse from './product.response';
 
@@ -32,6 +32,7 @@ export class ProductsController {
     status: HttpStatus.CREATED,
     description: 'Create a product',
   })
+  @ApiOperation({ summary: 'Create product' })
   @Roles('Admin')
   async create(@Body() createProductDto: CreateProductDto) {
     const product = await this.productsService.create(createProductDto);
@@ -46,13 +47,15 @@ export class ProductsController {
   @Get('list')
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'list all products',
+    description: 'List all products',
   })
+  @ApiOperation({ summary: 'List all products' })
   async findAll() {
     return await this.productsService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Find product' })
   @ApiResponse({
     status: HttpStatus.FOUND,
     description: 'find product by id',
@@ -69,6 +72,7 @@ export class ProductsController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RoleGuard)
+  @ApiOperation({ summary: 'Update product' })
   @ApiBearerAuth()
   @Roles('Admin')
   @ApiParam({
@@ -94,6 +98,8 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete product' })
+  @Roles('Admin')
   async remove(@Param('id') id: string) {
     return await this.productsService.remove(+id);
   }

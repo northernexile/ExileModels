@@ -12,7 +12,7 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { RolesService } from './roles.service';
 import SuccessResponse from '../services/responses/success.response';
 import roleResponse from './role.response';
@@ -35,6 +35,7 @@ export class RoleController {
   })
   @UseGuards(JwtAuthGuard)
   @Roles('Admin', 'Guest')
+  @ApiOperation({ summary: 'List of roles' })
   async findAll() {
     return SuccessResponse(
       'Application user roles',
@@ -48,6 +49,7 @@ export class RoleController {
     status: HttpStatus.OK,
     description: 'Specific role located by `id`',
   })
+  @ApiOperation({ summary: 'Find role by id' })
   @ApiParam({
     name: 'id',
     description: 'The role id',
@@ -55,7 +57,6 @@ export class RoleController {
     type: 'Number',
   })
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles('Admin', 'Guest')
   async getById(@Param('roleId') roleId: number) {
     const role = await this.rolesService.findOneById(roleId);
     if (role) {
@@ -75,6 +76,7 @@ export class RoleController {
     description: 'Create a role',
   })
   @UseGuards(JwtAuthGuard, RoleGuard)
+  @ApiOperation({ summary: 'Create a role' })
   @Roles('Admin')
   async create(createRoleDto: CreateRoleDto) {
     const role = await this.rolesService.create(createRoleDto);
@@ -100,6 +102,7 @@ export class RoleController {
   })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin', 'Guest')
+  @ApiOperation({ summary: 'Update a role' })
   async update(
     @Param('roleId') roleId: number,
     @Body() updateRoleDto: UpdateRoleDto,
@@ -130,6 +133,7 @@ export class RoleController {
   })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin')
+  @ApiOperation({ summary: 'Delete a role' })
   async delete(@Param('roleId') roleId: number) {
     const deleted = await this.rolesService.delete(roleId);
 

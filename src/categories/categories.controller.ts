@@ -14,6 +14,7 @@ import { UpdateCategoryDto } from '../dto/category/update-category.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('categories')
 export class CategoriesController {
@@ -22,22 +23,26 @@ export class CategoriesController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin')
   @Post()
+  @ApiOperation({ summary: 'Create category' })
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     return await this.categoriesService.create(createCategoryDto);
   }
 
   @Get()
+  @ApiOperation({ summary: 'List all categories' })
   async findAll() {
     return await this.categoriesService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get specific category' })
   async findOne(@Param('categoryId') categoryId: string) {
     return await this.categoriesService.findOne(+categoryId);
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Patch(':categoryId')
+  @ApiOperation({ summary: 'Update category' })
   @Roles('Admin')
   async update(
     @Param('categoryId') categoryId: string,
@@ -48,6 +53,7 @@ export class CategoriesController {
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Delete(':categoryId')
+  @ApiOperation({ summary: 'Delete category' })
   async remove(@Param('categoryId') categoryId: string) {
     return await this.categoriesService.remove(+categoryId);
   }
