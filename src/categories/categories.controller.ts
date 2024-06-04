@@ -14,7 +14,7 @@ import { UpdateCategoryDto } from '../dto/category/update-category.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 @Controller('categories')
 export class CategoriesController {
@@ -22,6 +22,7 @@ export class CategoriesController {
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin')
+  @ApiBearerAuth()
   @Post()
   @ApiOperation({ summary: 'Create category' })
   async create(@Body() createCategoryDto: CreateCategoryDto) {
@@ -43,6 +44,7 @@ export class CategoriesController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Patch(':categoryId')
   @ApiOperation({ summary: 'Update category' })
+  @ApiBearerAuth()
   @Roles('Admin')
   async update(
     @Param('categoryId') categoryId: string,
@@ -53,6 +55,7 @@ export class CategoriesController {
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Delete(':categoryId')
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete category' })
   async remove(@Param('categoryId') categoryId: string) {
     return await this.categoriesService.remove(+categoryId);

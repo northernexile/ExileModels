@@ -1,6 +1,6 @@
 import { Controller, Dependencies, Get, Req, UseGuards } from '@nestjs/common';
 import { SerialHandlerService } from './serial-handler.service';
-import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { SerialPortDto } from '../dto/serial/port/serial.port';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { Roles } from '../auth/roles/roles.decorator';

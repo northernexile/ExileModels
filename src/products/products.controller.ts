@@ -17,7 +17,12 @@ import { CreateProductDto } from '../dto/product/create.product.dto';
 import { UpdateProductDto } from '../dto/product/update.product.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
-import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import productResponse from './product.response';
 
@@ -98,7 +103,9 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @ApiOperation({ summary: 'Delete product' })
+  @ApiBearerAuth()
   @Roles('Admin')
   async remove(@Param('id') id: string) {
     return await this.productsService.remove(+id);
