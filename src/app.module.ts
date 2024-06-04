@@ -24,6 +24,8 @@ import { ProductsController } from './products/products.controller';
 import { ProductsModule } from './products/products.module';
 import { RoleController } from './roles/role.controller';
 import { ProductsService } from './products/products.service';
+import { CategoriesModule } from './categories/categories.module';
+import { ProductCategoriesModule } from './product-categories/product-categories.module';
 
 @Module({
   imports: [
@@ -66,6 +68,8 @@ import { ProductsService } from './products/products.service';
       }),
       inject: [ConfigService],
     }),
+    CategoriesModule,
+    ProductCategoriesModule,
   ],
   controllers: [
     AppController,
