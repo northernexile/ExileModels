@@ -1,5 +1,5 @@
 import { Product } from 'src/entities/product.entity';
-import CustomResponse from '../../dist/services/responses/custom.response';
+import CustomResponse from 'src/services/responses/custom.response';
 
 const ProductResponse = (
   code: number,

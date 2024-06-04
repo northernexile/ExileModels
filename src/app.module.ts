@@ -22,6 +22,8 @@ import { RoleGuard } from './auth/role/role.guard';
 import { UsersController } from './users/users.controller';
 import { ProductsController } from './products/products.controller';
 import { ProductsModule } from './products/products.module';
+import { RoleController } from './roles/role.controller';
+import { ProductsService } from './products/products.service';
 
 @Module({
   imports: [
@@ -36,6 +38,7 @@ import { ProductsModule } from './products/products.module';
     UsersModule,
     RolesModule,
     UsersRolesModule,
+    ProductsModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
@@ -63,13 +66,12 @@ import { ProductsModule } from './products/products.module';
       }),
       inject: [ConfigService],
     }),
-    ProductsModule,
   ],
   controllers: [
     AppController,
     SerialController,
     UsersController,
-    ProductsController,
+    RoleController,
   ],
   providers: [
     AppService,
