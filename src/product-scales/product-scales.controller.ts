@@ -24,36 +24,36 @@ export class ProductScalesController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @ApiBearerAuth()
   @Roles('Admin')
-  create(@Body() createProductScaleDto: CreateProductScaleDto) {
-    return this.productScalesService.create(createProductScaleDto);
+  async create(@Body() createProductScaleDto: CreateProductScaleDto) {
+    return await this.productScalesService.create(createProductScaleDto);
   }
 
   @Get()
-  findAll() {
-    return this.productScalesService.findAll();
+  async findAll() {
+    return await this.productScalesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productScalesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.productScalesService.findOne(+id);
   }
 
   @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateProductScaleDto: UpdateProductScaleDto,
   ) {
-    return this.productScalesService.update(+id, updateProductScaleDto);
+    return await this.productScalesService.update(+id, updateProductScaleDto);
   }
 
   @Delete(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin')
-  remove(@Param('id') id: string) {
-    return this.productScalesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.productScalesService.remove(+id);
   }
 }
