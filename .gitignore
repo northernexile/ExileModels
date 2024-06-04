@@ -133,3 +133,4 @@ dist
 .idea/*
 http/http-client.private.env.json
 /src/cert/
+src/ExileModels.code-workspace
