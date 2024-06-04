@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { CreateProductDto } from '../dto/product/create.product.dto';
+import { UpdateProductDto } from '../dto/product/update.product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
+import { Product } from '../entities/product.entity';
 import { MongoRepository } from 'typeorm';
 
 @Injectable()
@@ -13,11 +13,11 @@ export class ProductsService {
   ) {}
 
   async create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+    return await this.productRepository.save(createProductDto);
   }
 
   async findAll() {
-    return `This action returns all products`;
+    return await this.productRepository.find();
   }
 
   async findOne(id: number) {
@@ -25,7 +25,14 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+    let result: any = false;
+    const product = this.productRepository.create(updateProductDto);
+
+    if (product) {
+      result = this.productRepository.update(id, product);
+    }
+
+    return result;
   }
 
   async remove(id: number) {

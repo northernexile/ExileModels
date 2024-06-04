@@ -1,12 +1,18 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('roles')
-export class RoleEntity {
+@Entity('products')
+export class Product {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
   @Column({ type: 'varchar', nullable: false })
   name: string;
+
+  @Column({ type: 'text' })
+  description: string;
+
+  @Column({ type: 'tinyint' })
+  isReleased: boolean;
 
   @Column({ type: 'timestamp', nullable: false })
   createdAt: Date;
