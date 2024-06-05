@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  ServiceUnavailableException,
+  HttpStatus,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from '../dto/category/create.category.dto';
@@ -15,6 +17,7 @@ import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import CategoryResponse from './category.response';
 
 @Controller('categories')
 export class CategoriesController {
@@ -26,19 +29,29 @@ export class CategoriesController {
   @Post()
   @ApiOperation({ summary: 'Create category' })
   async create(@Body() createCategoryDto: CreateCategoryDto) {
-    return await this.categoriesService.create(createCategoryDto);
+    const category = await this.categoriesService.create(createCategoryDto);
+
+    if (!category) {
+      throw new ServiceUnavailableException('Could not create category');
+    }
+
+    return CategoryResponse(HttpStatus.CREATED, 'Category created', category);
   }
 
   @Get()
   @ApiOperation({ summary: 'List all categories' })
   async findAll() {
-    return await this.categoriesService.findAll();
+    const categories = await this.categoriesService.findAll();
+
+    return CategoryResponse(HttpStatus.OK, 'Category list', categories);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get specific category' })
   async findOne(@Param('categoryId') categoryId: string) {
-    return await this.categoriesService.findOne(+categoryId);
+    const category: any = await this.categoriesService.findOne(+categoryId);
+
+    return CategoryResponse(HttpStatus.OK, 'Category found', category);
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -50,7 +63,12 @@ export class CategoriesController {
     @Param('categoryId') categoryId: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return await this.categoriesService.update(+categoryId, updateCategoryDto);
+    const update = await this.categoriesService.update(
+      +categoryId,
+      updateCategoryDto,
+    );
+
+    return CategoryResponse(HttpStatus.NO_CONTENT, 'Category updated', update);
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -58,6 +76,8 @@ export class CategoriesController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete category' })
   async remove(@Param('categoryId') categoryId: string) {
-    return await this.categoriesService.remove(+categoryId);
+    const deleted: any = await this.categoriesService.remove(+categoryId);
+
+    return CategoryResponse(HttpStatus.NO_CONTENT, 'Category deleted', deleted);
   }
 }
