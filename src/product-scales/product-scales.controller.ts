@@ -9,8 +9,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ProductScalesService } from './product-scales.service';
-import { CreateProductScaleDto } from '../dto/product/scales/create-product-scale.dto';
-import { UpdateProductScaleDto } from '../dto/product/scales/update-product-scale.dto';
+import { CreateProductScaleDto } from '../dto/product/scales/create.product.scale.dto';
+import { UpdateProductScaleDto } from '../dto/product/scales/update.product.scale.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';

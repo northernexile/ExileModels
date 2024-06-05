@@ -4,8 +4,8 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateProductScaleDto } from '../dto/product/scales/create-product-scale.dto';
-import { UpdateProductScaleDto } from '../dto/product/scales/update-product-scale.dto';
+import { CreateProductScaleDto } from '../dto/product/scales/create.product.scale.dto';
+import { UpdateProductScaleDto } from '../dto/product/scales/update.product.scale.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductScale } from 'src/entities/product-scale.entity';
 import { MongoRepository } from 'typeorm';

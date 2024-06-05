@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ScalesService } from './scales.service';
-import { CreateScaleDto } from '../dto/create-scale.dto';
-import { UpdateScaleDto } from '../dto/scale/update-scale.dto';
+import { CreateScaleDto } from '../dto/scale/create.scale.dto';
+import { UpdateScaleDto } from '../dto/scale/update.scale.dto';
 
 @Controller('scales')
 export class ScalesController {

@@ -1,16 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column } from 'typeorm';
 
-export class BaseUserRoleDto {
+export class BaseScaleDto {
   @ApiProperty()
   @Column({ type: 'int', nullable: true })
   id?: number;
 
   @ApiProperty()
-  @Column({ type: 'int', nullable: false })
-  userId?: number;
-
-  @ApiProperty()
-  @Column({ type: 'int', nullable: false })
-  roleId?: number;
+  @Column({ type: 'varchar', nullable: false })
+  name: string;
 }

@@ -9,8 +9,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
-import { CreateCategoryDto } from '../dto/category/create-category.dto';
-import { UpdateCategoryDto } from '../dto/category/update-category.dto';
+import { CreateCategoryDto } from '../dto/category/create.category.dto';
+import { UpdateCategoryDto } from '../dto/category/update.category.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';

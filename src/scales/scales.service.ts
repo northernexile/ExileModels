@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateScaleDto } from '../dto/create-scale.dto';
-import { UpdateScaleDto } from '../dto/scale/update-scale.dto';
+import { CreateScaleDto } from '../dto/scale/create.scale.dto';
+import { UpdateScaleDto } from '../dto/scale/update.scale.dto';
 
 @Injectable()
 export class ScalesService {

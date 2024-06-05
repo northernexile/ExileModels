@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ProductCategoriesService } from './product-categories.service';
-import { CreateProductCategoryDto } from '../dto/product/category/create-product-category.dto';
-import { UpdateProductCategoryDto } from '../dto/product/category/update-product-category.dto';
+import { CreateProductCategoryDto } from '../dto/product/category/create.product.category.dto';
+import { UpdateProductCategoryDto } from '../dto/product/category/update.product.category.dto';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
