@@ -9,7 +9,7 @@ import { CreateScaleDto } from '../dto/scale/create.scale.dto';
 import { UpdateScaleDto } from '../dto/scale/update.scale.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
-import { Scale } from './entities/scale.entity';
+import { Scale } from '../entities/scale.entity';
 
 @Injectable()
 export class ScalesService {

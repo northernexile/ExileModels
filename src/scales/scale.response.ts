@@ -1,5 +1,5 @@
 import CustomResponse from 'src/services/responses/custom.response';
-import { Scale } from './entities/scale.entity';
+import { Scale } from '../entities/scale.entity';
 
 const ScaleResponse = (
   code: number,
