@@ -16,10 +16,11 @@ import { UpdateCategoryDto } from '../dto/category/update.category.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
-import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import CategoryResponse from './category.response';
 
 @Controller('categories')
+@ApiTags('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 

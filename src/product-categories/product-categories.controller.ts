@@ -10,13 +10,14 @@ import {
 import { ProductCategoriesService } from './product-categories.service';
 import { CreateProductCategoryDto } from '../dto/product/category/create.product.category.dto';
 import { UpdateProductCategoryDto } from '../dto/product/category/update.product.category.dto';
-import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 
 @Controller('product/categories')
+@ApiTags('products', 'categories')
 export class ProductCategoriesController {
   constructor(
     private readonly productCategoriesService: ProductCategoriesService,

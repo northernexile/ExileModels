@@ -13,10 +13,11 @@ import { CreateProductScaleDto } from '../dto/product/scales/create.product.scal
 import { UpdateProductScaleDto } from '../dto/product/scales/update.product.scale.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles/roles.decorator';
 
 @Controller('product/scales')
+@ApiTags('products', 'scales')
 export class ProductScalesController {
   constructor(private readonly productScalesService: ProductScalesService) {}
 

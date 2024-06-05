@@ -15,15 +15,21 @@ import {
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RoleGuard } from '../auth/role/role.guard';
-import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Roles } from '../auth/roles/roles.decorator';
 import SuccessResponse from '../services/responses/success.response';
 import userResponse from './user.response';
 import { CreateUserDto } from '../dto/user/create.user';
 import { UpdateUserDto } from '../dto/user/update.user';
-import roleResponse from '../roles/role.response';
 
 @Controller('users')
+@ApiTags('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 

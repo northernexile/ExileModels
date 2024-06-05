@@ -1,12 +1,18 @@
 import { Controller, Dependencies, Get, Req, UseGuards } from '@nestjs/common';
 import { SerialHandlerService } from './serial-handler.service';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { SerialPortDto } from '../dto/serial/port/serial.port';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { Roles } from '../auth/roles/roles.decorator';
 import { RoleGuard } from '../auth/role/role.guard';
 
 @Controller('serial')
+@ApiTags('serial')
 @Dependencies(SerialHandlerService)
 export class SerialController {
   constructor(private readonly serialHandlerService: SerialHandlerService) {

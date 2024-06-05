@@ -12,13 +12,14 @@ import {
 import { ScalesService } from './scales.service';
 import { CreateScaleDto } from '../dto/scale/create.scale.dto';
 import { UpdateScaleDto } from '../dto/scale/update.scale.dto';
-import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import ScaleResponse from './scale.response';
 
 @Controller('scales')
+@ApiTags('scales')
 export class ScalesController {
   constructor(private readonly scalesService: ScalesService) {}
 

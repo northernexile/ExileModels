@@ -3,9 +3,10 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { WiThrottleMessagesService } from './wi-throttle-messages.service';
 import { CreateWiThrottleMessageDto } from './dto/create-wi-throttle-message.dto';
 import { UpdateWiThrottleMessageDto } from './dto/update-wi-throttle-message.dto';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@Controller()
+@Controller('throttle')
+@ApiTags('throttle')
 @Dependencies(WiThrottleMessagesService)
 export class WiThrottleMessagesController {
   constructor(

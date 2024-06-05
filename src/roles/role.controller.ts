@@ -12,7 +12,13 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { RolesService } from './roles.service';
 import SuccessResponse from '../services/responses/success.response';
 import roleResponse from './role.response';
@@ -23,6 +29,7 @@ import { RoleGuard } from '../auth/role/role.guard';
 import { Roles } from '../auth/roles/roles.decorator';
 
 @Controller('roles')
+@ApiTags('roles')
 export class RoleController {
   constructor(private rolesService: RolesService) {}
 
