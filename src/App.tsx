@@ -1,15 +1,14 @@
+import React from 'react';
+import {CssBaseline } from '@mui/material';
+import ExileAppBar from './components/ExileAppBar';
 
-import ExileAppBar from './components/ExileAppBar'
-
-// Works also with SSR as expected
 
 
-function App() {
-  return (
-    <>
-      <ExileAppBar />
-    </>
-  )
+const MyApp = () => {
+  return(<>
+    <CssBaseline />
+    <ExileAppBar />
+  </>)
 }
 
-export default App
+export default MyApp
