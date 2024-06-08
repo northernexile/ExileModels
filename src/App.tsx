@@ -1,6 +1,7 @@
-import React from 'react';
-import {CssBaseline } from '@mui/material';
+
+import {CssBaseline} from '@mui/material';
 import ExileAppBar from './components/ExileAppBar';
+import Home from './pages/Home';
 
 
 
@@ -8,6 +9,7 @@ const MyApp = () => {
   return(<>
     <CssBaseline />
     <ExileAppBar />
+    <Home />
   </>)
 }
 
