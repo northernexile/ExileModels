@@ -4,10 +4,26 @@ import ExileAppBar from './components/ExileAppBar';
 import Home from './pages/Home';
 import ExileAppFooter from './components/ExileAppFooter';
 
+import { ThemeOptions, ThemeProvider, createTheme } from '@mui/material/styles';
 
+export const themeOptions: ThemeOptions = {
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#25555c',
+    },
+    secondary: {
+      main: '#f50057',
+    },
+  },
+};
+
+const defaultTheme = createTheme(themeOptions)
 
 const MyApp = () => {
-  return(<Box sx={{
+  return(
+    <ThemeProvider theme={defaultTheme}>
+  <Box sx={{
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
@@ -16,7 +32,9 @@ const MyApp = () => {
     <ExileAppBar />
     <Home />
     <ExileAppFooter />
-  </Box>)
+  </Box>
+  </ThemeProvider>
+  )
 }
 
 export default MyApp
