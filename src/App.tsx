@@ -1,12 +1,12 @@
 
 import './App.css'
+import Home from './pages/Home'
+
 
 
 function App() {
   return (
-    <>
-      Exile Models UI
-    </>
+    <Home />
   )
 }
 
