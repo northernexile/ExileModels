@@ -1,12 +1,14 @@
 
-import './App.css'
-import Home from './pages/Home'
+import ExileAppBar from './components/ExileAppBar'
 
+// Works also with SSR as expected
 
 
 function App() {
   return (
-    <Home />
+    <>
+      <ExileAppBar />
+    </>
   )
 }
 

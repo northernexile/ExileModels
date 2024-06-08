@@ -1,6 +1,10 @@
+import ExileAppBar from "../components/ExileAppBar"
+
 
 const Home = () => {
-    return (<h1>Home</h1>)
+    return (<>
+    <ExileAppBar />
+    </>)
 }
 
 export default Home
