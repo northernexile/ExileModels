@@ -2,6 +2,7 @@ import React from "react"
 import { AppBar, Avatar, Box, Button, Container, IconButton, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Menu } from '@mui/material';
+import Logo from '../assets/Logo.svg';
 
 const ExileAppBar = () => {
   const pages = ['Home','Models','Web Throttle','Blog','Contact','About'];
@@ -43,7 +44,12 @@ const ExileAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            Exile Models
+            <Box
+            component="img"
+            sx={{width:210,height:50}}
+            alt="Exile Models"
+            src={Logo}
+        />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -98,7 +104,14 @@ const ExileAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            Exile Models
+            <Box
+            component="img"
+            sx={{
+            width: 210,height:50
+            }}
+            alt="Exile Models"
+            src={Logo}
+        />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
