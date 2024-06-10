@@ -1,5 +1,5 @@
-import { Copyright } from "@mui/icons-material";
-import { Box, Container, Typography } from "@mui/material";
+
+import { Box, Container, } from "@mui/material";
 
 const ExileAppFooter = () => {
     return (
@@ -15,12 +15,7 @@ const ExileAppFooter = () => {
           : theme.palette.grey[800],
     }}
     >
-        <Container maxWidth="sm">
-            <Typography variant="body1">
-              Privacy policy
-            </Typography>
-            <Copyright />
-          </Container>
+        <Container maxWidth="sm"></Container>
     </Box>
     )
 }
