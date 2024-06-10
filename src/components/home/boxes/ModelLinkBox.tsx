@@ -1,5 +1,4 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import McrPicc from '../../../assets/McrPicc.png'
 
 const ModelLinkBox = () => {
     
@@ -16,13 +15,13 @@ const ModelLinkBox = () => {
                     sx={{height:140}}
                 />
                 <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    Model Buildings
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    An upcoming range of model buildings that will be available in various scales 
-                    to purchase and use with Model railways or in dioramas.
-                </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                        Model Buildings
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        An upcoming range of model buildings that will be available in various scales 
+                        to purchase and use with Model railways or in dioramas.
+                    </Typography>
                 </CardContent>
                 <CardActions>
                     <Button variant="contained" size="small">Share</Button>
