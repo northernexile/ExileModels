@@ -29,7 +29,7 @@ export const Router = () => {
             <Route path='/privacy' element={<Privacy />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register/>} />
-            <Route path='/password/rest' element={<ResetPassword/>} />
+            <Route path='/password/reset' element={<ResetPassword/>} />
             <Route path='/email/verify' element={<VerifyRegistration/>} />
             <Route path='/reminder/verify' element={<VerifyReminder />} /> 
             <Route element={<ProtectedRoute />}>

@@ -1,9 +1,13 @@
 import PublicLayout from "../components/PublicLayout"
+import StandardGrid from "../components/StandardGrid";
+import RegistrationForm from "../components/forms/RegistrationForm";
 
 const Register = () => {
     return (
         <PublicLayout>
-            Register
+            <StandardGrid>
+                <RegistrationForm />
+            </StandardGrid>
         </PublicLayout>
     )
 }
