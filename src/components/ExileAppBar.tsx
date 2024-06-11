@@ -1,12 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 import { AppBar, Avatar, Box, Button, Container, IconButton, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Menu } from '@mui/material';
 import Logo from '../assets/Logo.svg';
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
+import { useAuth } from "./auth/AuthProvider";
 
 const ExileAppBar = () => {
+
  const links = [
     {title:'Models',path:'/models'},
     {title:'Web Throttle',path:'/throttle'},
@@ -14,7 +16,15 @@ const ExileAppBar = () => {
     {title:'Contact',path:'/contact'},
     {title:'About',path:'/about'}
   ]
-  const settings = ['Profile','Account','Dashboard','Logout'];
+ const profileSettings = [
+    {title:'Profile',path:'/profile'},
+    {title:'Account',path:'/account'},
+    {title:'Dashboard',path:'/admin'},
+  ]
+
+  const token = useAuth();
+
+  const loginLink = !Object.keys(token).length ? {title:'Login',path:'/login'} : {title:'Logout',path:'/logout'}
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -161,11 +171,18 @@ const ExileAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {profileSettings.map((setting) => (
+                <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
+                  <Link style={{textDecoration:'none'}} component={RouterLink} to={setting.path}>
+                    <Typography textAlign="center">{setting.title}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
+              <MenuItem key={loginLink.title} onClick={handleCloseUserMenu}>
+                <Link style={{textDecoration:'none'}} component={RouterLink} to={loginLink.path}>
+                  <Typography textAlign={"center"}>{loginLink.title}</Typography>
+                </Link>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

@@ -1,4 +1,4 @@
-
+import React from 'react';
 import {Box, CssBaseline} from '@mui/material';
 import ExileAppBar from './components/ExileAppBar';
 import Home from './pages/Home';
