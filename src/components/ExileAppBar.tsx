@@ -3,9 +3,17 @@ import { AppBar, Avatar, Box, Button, Container, IconButton, MenuItem, Toolbar, 
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Menu } from '@mui/material';
 import Logo from '../assets/Logo.svg';
+import { Link as RouterLink } from "react-router-dom";
+import { Link } from "@mui/material";
 
 const ExileAppBar = () => {
-  const pages = ['Home','Models','Web Throttle','Blog','Contact','About'];
+ const links = [
+    {title:'Models',path:'/models'},
+    {title:'Web Throttle',path:'/throttle'},
+    {title:'Blog',path:'/blog'},
+    {title:'Contact',path:'/contact'},
+    {title:'About',path:'/about'}
+  ]
   const settings = ['Profile','Account','Dashboard','Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -33,7 +41,7 @@ const ExileAppBar = () => {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -81,9 +89,11 @@ const ExileAppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {links.map((page) => (
+                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                  <Link style={{textDecoration:'none'}} color="inherit" component={RouterLink} to={page.path}>
+                    <Typography sx={{textDecoration:'none'}} textAlign="center">{page.title}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -92,7 +102,7 @@ const ExileAppBar = () => {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/src"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -114,13 +124,17 @@ const ExileAppBar = () => {
         />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {links.map((page) => (
               <Button
-                key={page}
+                key={page.title}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block',textDecoration:'none' }}
               >
-                {page}
+                <Link style={{textDecoration:'none'}} color="inherit" component={RouterLink} to={page.path}>
+                  <Typography sx={{
+                    textDecoration:'none'
+                  }} variant="body1" component={'span'}>{page.title}</Typography>
+                </Link>
               </Button>
             ))}
           </Box>
