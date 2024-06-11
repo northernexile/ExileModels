@@ -18,7 +18,7 @@ const LoginForm = () => {
         loginApi.login(formData,true).then((response)=>{
             console.log(response)
         }).catch((error)=>{
-            console.error(error.response)
+            console.error(error)
         })
     }
 
