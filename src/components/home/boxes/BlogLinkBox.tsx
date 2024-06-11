@@ -1,4 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const BlogLinkBox = () => {
     
@@ -25,7 +26,11 @@ const BlogLinkBox = () => {
                 </CardContent>
                 <CardActions>
                     <Button variant="contained" size="small">Share</Button>
-                    <Button variant="outlined" size="small">Learn more</Button>
+                    <Link style={{textDecoration:'none'}} to="/blog">
+                        <Button variant="outlined" size="small">
+                            Learn more
+                        </Button>
+                    </Link>
                 </CardActions>
             </Card>
         </Grid>
