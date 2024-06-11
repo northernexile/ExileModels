@@ -24,7 +24,10 @@ export const LoginApi:LoginApiInterface = {
             if(user) {
                 localStorage.setItem('user',JSON.stringify(user))
             }
-          }
+
+        }
+
+        return userData;
     }
 }
 
