@@ -1,9 +1,19 @@
-import { Grid } from "@mui/material"
+import { Card, CardContent, Grid } from "@mui/material"
 
 const StandardGrid  = ({children} :any) => {
     return (
         <Grid container sx={{marginTop:2}}>
-            {children}
+             <Grid item xs={12}>
+            <Card sx={{
+                marginLeft:1,
+                marginRight:1,
+                marginBottom:1
+            }}>
+                <CardContent>
+                    {children}
+                </CardContent>
+            </Card>
+            </Grid>
         </Grid>
     )
 }
