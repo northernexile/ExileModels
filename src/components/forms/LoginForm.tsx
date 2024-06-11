@@ -1,8 +1,12 @@
 import { Button, Grid, TextField } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { LoginApi } from '../../services/api/auth/login.api';
 
 const LoginForm = () => {
+
+    const loginApi = LoginApi;
+
     const [formData, setFormData] = useState({
         email:'',
         password:''
@@ -11,7 +15,11 @@ const LoginForm = () => {
     const handleSubmit = (event:any) => {
         event.preventDefault()
 
-        console.log(formData)
+        loginApi.login(formData,true).then((response)=>{
+            console.log(response)
+        }).catch((error)=>{
+            console.error(error.response)
+        })
     }
 
     const handleChange = (event:any) => {
