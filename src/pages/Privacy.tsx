@@ -1,7 +1,10 @@
+import PublicLayout from "../components/PublicLayout"
 
 const Privacy = () => {
     return (
-        <div>Privacy Policy</div>
+        <PublicLayout>
+            <div>Privacy Policy</div>
+        </PublicLayout>
     )
 }
 

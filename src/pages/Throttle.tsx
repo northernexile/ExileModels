@@ -1,7 +1,10 @@
+import PublicLayout from "../components/PublicLayout"
 
 const Throttle = () => {
     return (
-        <div>Throttle</div>
+        <PublicLayout>
+            <div>Throttle</div>
+        </PublicLayout>
     )
 }
 

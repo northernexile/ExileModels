@@ -1,7 +1,10 @@
+import PublicLayout from "../components/PublicLayout"
 
 const ModelBuildings = () => {
     return (
-        <div>Model Buildings</div>
+        <PublicLayout>
+            <div>Model Buildings</div>
+        </PublicLayout>
     )
 }
 

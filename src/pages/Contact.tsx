@@ -1,7 +1,10 @@
+import PublicLayout from "../components/PublicLayout"
 
 const Contact = () => {
     return (
-        <div>Contact</div>
+        <PublicLayout>
+            <div>Contact</div>
+        </PublicLayout>
     )
 }
 

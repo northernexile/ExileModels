@@ -1,12 +1,19 @@
 import React from 'react'
-import { type RenderToPipeableStreamOptions, renderToPipeableStream } from 'react-dom/server'
-import App from './App'
+import ReactDOMServer from 'react-dom/server'
+import { StaticRouter } from 'react-router-dom/server';
+import { Router } from './Router'
 
-export function render(_url: string, _ssrManifest?: string, options?: RenderToPipeableStreamOptions) {
-  return renderToPipeableStream(
+interface IRenderProps {
+  path: string;
+}
+
+export function render({path}: IRenderProps) {
+  const html = ReactDOMServer.renderToString(
     <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-    options
+        <StaticRouter location={path}>
+            <Router />
+        </StaticRouter>
+    </React.StrictMode>
   )
+  return { html }
 }

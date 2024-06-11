@@ -1,7 +1,11 @@
+import PublicLayout from "../components/PublicLayout"
 
 const About = () => {
     return (
-        <div>About</div>
+        <PublicLayout>
+            <div>About</div>
+        </PublicLayout>
+        
     )
 }
 
