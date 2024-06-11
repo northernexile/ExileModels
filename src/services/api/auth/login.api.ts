@@ -15,7 +15,16 @@ export const LoginApi:LoginApiInterface = {
             signal: cancel ? cancelApiObject[this.login.name].handleRequestCancellation().signal : undefined,
           });
 
-        return response.data
+          const userData:LoginResponseInterface = response.data;
+          const accessToken = userData.data?.access_token;
+          const user = userData.data?.user;
+
+          if(userData.code === 200 && accessToken){
+            localStorage.setItem('token',accessToken);
+            if(user) {
+                localStorage.setItem('user',JSON.stringify(user))
+            }
+          }
     }
 }
 

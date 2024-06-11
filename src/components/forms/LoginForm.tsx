@@ -16,7 +16,7 @@ const LoginForm = () => {
         event.preventDefault()
         console.log(formData)
         loginApi.login(formData,true).then((response)=>{
-            console.log(response)
+            
         }).catch((error)=>{
             console.error(error)
         })
