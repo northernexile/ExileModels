@@ -2,8 +2,25 @@ import { Button, Grid, TextField } from "@mui/material"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { LoginApi } from '../../services/api/auth/login.api';
+import axios from "axios";
+
 
 const LoginForm = () => {
+
+    const [token, setToken_] = useState(localStorage.getItem("token"));
+    const setToken = (newToken :any) => {
+        setToken_(newToken);
+    };
+
+    useEffect(() => {
+        if (token) {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+            localStorage.setItem('token',token);
+        } else {
+            delete axios.defaults.headers.common["Authorization"];
+            localStorage.removeItem('token')
+        }
+    },[token]);
 
     const loginApi = LoginApi;
 
@@ -16,7 +33,17 @@ const LoginForm = () => {
         event.preventDefault()
         console.log(formData)
         loginApi.login(formData,true).then((response)=>{
-            
+            const tokenResponse = response.data?.access_token;
+            const userData = JSON.stringify(response.data?.user);
+
+            if( tokenResponse ) {
+                setToken(tokenResponse)
+                console.log(token)
+            }
+
+            if(userData) {
+                console.log(userData)
+            }
         }).catch((error)=>{
             console.error(error)
         })
