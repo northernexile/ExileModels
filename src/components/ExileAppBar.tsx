@@ -8,7 +8,6 @@ import { Link } from "@mui/material";
 
 const ExileAppBar = () => {
  const links = [
-    {title:'Home',path:'/'},
     {title:'Models',path:'/models'},
     {title:'Web Throttle',path:'/throttle'},
     {title:'Blog',path:'/blog'},
