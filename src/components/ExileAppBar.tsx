@@ -92,7 +92,7 @@ const ExileAppBar = () => {
             >
               {links.map((page) => (
                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                  <Link color="inherit" component={RouterLink} to={page.path}>
+                  <Link style={{textDecoration:'none'}} color="inherit" component={RouterLink} to={page.path}>
                     <Typography sx={{textDecoration:'none'}} textAlign="center">{page.title}</Typography>
                   </Link>
                 </MenuItem>
@@ -131,7 +131,7 @@ const ExileAppBar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block',textDecoration:'none' }}
               >
-                <Link color="inherit" component={RouterLink} to={page.path}>
+                <Link style={{textDecoration:'none'}} color="inherit" component={RouterLink} to={page.path}>
                   <Typography sx={{
                     textDecoration:'none'
                   }} variant="body1" component={'span'}>{page.title}</Typography>
