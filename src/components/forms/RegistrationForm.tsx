@@ -1,6 +1,8 @@
 import { Grid, Button, TextField } from "@mui/material"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { RegistrationInterface } from "../../models/user/registration/registration.interface"
+import { join } from "path"
 
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
@@ -14,7 +16,12 @@ const RegistrationForm = () => {
     const handleSubmit = (event:any) => {
         event.preventDefault()
 
-        console.log(formData)
+        const registrationPayload:RegistrationInterface = {
+            email:formData.email,
+            password:formData.password,
+            confirm:formData.confirmPassword,
+            username:[formData.firstNames,formData.lastName].join(' ')
+        }
     }
 
     const handleChange = (event:any) => {
@@ -34,6 +41,8 @@ const RegistrationForm = () => {
                 type="text"
                 fullWidth
                 required
+                error
+                helperText="Firstnames required"
             />
             <TextField
                 sx={{marginBottom:1}}
@@ -43,8 +52,10 @@ const RegistrationForm = () => {
                 value={formData.lastName}
                 onChange={handleChange}
                 type="text"
+                helperText="Last name is required"
                 fullWidth
                 required
+                error
             />
             <TextField
                 sx={{marginBottom:1}}
@@ -56,6 +67,8 @@ const RegistrationForm = () => {
                 type="email"
                 fullWidth
                 required
+                error
+                helperText="Enter a valid email"
             />
             <TextField
                 sx={{marginBottom:1}}
@@ -67,6 +80,8 @@ const RegistrationForm = () => {
                 type="password"
                 fullWidth
                 required
+                error
+                helperText="Enter your password"
             />
             <TextField
                 sx={{marginBottom:1}}
