@@ -16,8 +16,19 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import Admin from './pages/admin/Admin';
 import Profile from './pages/Profile';
 import Account from './pages/Account';
+import Cookies from 'js-cookie';
 
 export const Router = () => {
+
+    const getAccessToken = () => {
+        return Cookies.get('token');
+    }
+      
+    const isAuthenticated = () => {
+        return !!getAccessToken();
+    }
+
+
     return (
         <Routes>
             <Route path='/' element={<Home/>} />
@@ -32,7 +43,7 @@ export const Router = () => {
             <Route path='/password/reset' element={<ResetPassword/>} />
             <Route path='/email/verify' element={<VerifyRegistration/>} />
             <Route path='/reminder/verify' element={<VerifyReminder />} /> 
-            <Route element={<ProtectedRoute />}>
+            <Route element={<ProtectedRoute isAuthenticated={isAuthenticated()} />}>
                 <Route path='/account' element={<Account />} />
                 <Route path='/profile' element={<Profile/>} />
                 <Route path='/admin' element={<Admin />} />

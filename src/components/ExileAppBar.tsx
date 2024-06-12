@@ -1,11 +1,11 @@
-import React, { useState } from "react"
+import React from "react"
 import { AppBar, Avatar, Box, Button, Container, IconButton, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Menu } from '@mui/material';
 import Logo from '../assets/Logo.svg';
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
-import { useAuth } from "./auth/AuthProvider";
+import Cookies from 'js-cookie';
 
 const ExileAppBar = () => {
 
@@ -22,9 +22,15 @@ const ExileAppBar = () => {
     {title:'Dashboard',path:'/admin'},
   ]
 
-  const token = useAuth();
+  const getAccessToken = () => {
+    return Cookies.get('token');
+}
+  
+  const isAuthenticated = () => {
+      return !!getAccessToken();
+  }
 
-  const loginLink = !Object.keys(token).length ? {title:'Login',path:'/login'} : {title:'Logout',path:'/logout'}
+  const loginLink = !isAuthenticated() ? {title:'Login',path:'/login'} : {title:'Logout',path:'/logout'}
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 

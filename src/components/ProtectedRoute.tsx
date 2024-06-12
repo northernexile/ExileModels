@@ -1,12 +1,9 @@
-import { useAuth } from "./auth/AuthProvider"
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom"
 
-export const ProtectedRoute = () => {
-    const {token} = useAuth();
+export const ProtectedRoute = ({isAuthenticated} :any) => {
+    if( ! isAuthenticated) {
+        return <Navigate to="/login" />
+    }
 
-    console.log('token is '+token)
-
-    return (!token)
-        ? <Navigate to='/login'  />
-        : <Outlet />
+    return <Outlet />
 }
