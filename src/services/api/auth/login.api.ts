@@ -20,6 +20,7 @@ export const LoginApi:LoginApiInterface = {
     },
     logout: async function() :Promise<void>{
         Cookies.remove('token')
+        Cookies.remove('userRole')
     }
 }
 
