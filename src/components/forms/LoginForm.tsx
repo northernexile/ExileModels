@@ -3,9 +3,11 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { LoginApi } from '../../services/api/auth/login.api';
 import Cookies from 'js-cookie';
+import useAlert from "../alert/useAlert";
 
 const LoginForm = () => {
     const navigate = useNavigate();
+    const { setAlert } = useAlert();
 
     const loginApi = LoginApi;
 
@@ -29,12 +31,13 @@ const LoginForm = () => {
                 Cookies.set('userRole',userData)
             }
 
+            setAlert('Logged in','success');
+
             if(tokenResponse && userData) {
                 navigate("/",{replace:true})
             }
         }).catch((error)=>{
-            console.log('error response')
-            console.error(error)
+            setAlert('Log in failed','error')
         })
     }
 

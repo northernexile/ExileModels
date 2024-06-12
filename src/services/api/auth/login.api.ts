@@ -16,9 +16,6 @@ export const LoginApi:LoginApiInterface = {
             signal: cancel ? cancelApiObject[this.login.name].handleRequestCancellation().signal : undefined,
           });
 
-        console.log('api response')  
-        console.log(response.data);
-
         return response.data;
     },
     logout: async function() :Promise<void>{
