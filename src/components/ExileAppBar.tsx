@@ -23,13 +23,13 @@ const ExileAppBar = () => {
   ]
 
   const getAccessToken = () => {
-    return Cookies.get('token');
-}
+    const token:any = Cookies.get('token');
+    return token;
+  }
   
   const isAuthenticated = () => {
       return !!getAccessToken();
   }
-
   const loginLink = !isAuthenticated() ? {title:'Login',path:'/login'} : {title:'Logout',path:'/logout'}
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -118,7 +118,7 @@ const ExileAppBar = () => {
             variant="h5"
             noWrap
             component="a"
-            href="/src"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

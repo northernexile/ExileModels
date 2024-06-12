@@ -26,9 +26,10 @@ const LoginForm = () => {
             }
 
             if(userData) {
-                console.log(userData)
+                Cookies.set('userRole',userData)
             }
         }).catch((error)=>{
+            console.log('error response')
             console.error(error)
         })
     }

@@ -3,5 +3,6 @@ import { LoginResponseInterface } from "../../../models/auth/login.response.inte
 import { CredentialsInterface } from "../../../models/credentials/CredentialsInterface";
 
 export interface LoginApiInterface {
-    login:(payload:CredentialsInterface,cancel?: boolean) => Promise<LoginResponseInterface>
+    login:(payload:CredentialsInterface,cancel?: boolean) => Promise<LoginResponseInterface>,
+    logout:() => Promise<void>
 }

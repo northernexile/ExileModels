@@ -4,6 +4,7 @@ import { defineCancelApiObject } from "../config/define.cancel.api.object"
 import { CredentialsInterface } from "../../../models/credentials/CredentialsInterface"
 import { LoginApiInterface } from "./login.api.interface";
 import { LoginResponseInterface } from "../../../models/auth/login.response.interface";
+import Cookies from "js-cookie";
 
 
 export const LoginApi:LoginApiInterface = {
@@ -15,8 +16,13 @@ export const LoginApi:LoginApiInterface = {
             signal: cancel ? cancelApiObject[this.login.name].handleRequestCancellation().signal : undefined,
           });
 
+        console.log('api response')  
+        console.log(response.data);
 
         return response.data;
+    },
+    logout: async function() :Promise<void>{
+        Cookies.remove('token')
     }
 }
 

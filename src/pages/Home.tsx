@@ -5,8 +5,7 @@ import BlogLinkBox from "../components/home/boxes/BlogLinkBox";
 import ContactLinkBox from "../components/home/boxes/ContactLinkBox";
 import PublicLayout from "../components/PublicLayout";
 
-const Home = () => {
-    
+const Home = () => { 
     return (
         <PublicLayout>
             <Grid container sx={{marginTop:2}}>
