@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { AppBar, Avatar, Box, Button, Container, IconButton, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { Menu } from '@mui/material';
@@ -6,6 +6,9 @@ import Logo from '../assets/Logo.svg';
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
 import Cookies from 'js-cookie';
+import UserProfile from './user/profile/UserProfile';
+import Profile from '../pages/Profile';
+import { ProfileInterface } from "../models/user/profile/profile.interface";
 
 const ExileAppBar = () => {
 
@@ -30,6 +33,14 @@ const ExileAppBar = () => {
   const isAuthenticated = () => {
       return !!getAccessToken();
   }
+
+  const [profileName,setProfileName] = useState('?')
+
+  useEffect(() =>{
+    const profile:ProfileInterface = UserProfile()
+    setProfileName(profile.profile?.name ?? '?')
+  })
+
   const loginLink = !isAuthenticated() ? {title:'Login',path:'/login'} : {title:'Logout',path:'/logout'}
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -158,7 +169,7 @@ const ExileAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Allen Hardy" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={profileName} src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
