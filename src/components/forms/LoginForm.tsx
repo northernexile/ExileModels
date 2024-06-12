@@ -1,11 +1,11 @@
 import { Button, Grid, TextField } from "@mui/material"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { LoginApi } from '../../services/api/auth/login.api';
 import Cookies from 'js-cookie';
 
 const LoginForm = () => {
-
+    const navigate = useNavigate();
 
     const loginApi = LoginApi;
 
@@ -27,6 +27,10 @@ const LoginForm = () => {
 
             if(userData) {
                 Cookies.set('userRole',userData)
+            }
+
+            if(tokenResponse && userData) {
+                navigate("/",{replace:true})
             }
         }).catch((error)=>{
             console.log('error response')
