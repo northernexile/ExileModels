@@ -4,24 +4,65 @@ import { FindUserResponseInterface } from "../../../models/user/find.user.respon
 import { UpdateUserInterface } from "../../../models/user/update.user.interface"
 import { UserApiInterface } from "../../../models/user/user.api.interface"
 import { UserListResponseInterface } from "../../../models/user/user.list.interface.response"
+import { api } from "../config/axios.config"
 import { defineCancelApiObject } from "../config/define.cancel.api.object"
 
 
 export const UserApi:UserApiInterface = {
-    list: function (cancel: boolean): Promise<UserListResponseInterface> {
-        throw new Error("Function not implemented.")
+    list: async function (cancel: boolean): Promise<UserListResponseInterface> {
+        const uri:string = '/users/list'
+        const response:any = await api.request({
+            url: uri,
+            method: "GET",
+            data: {},
+            signal: cancel ? cancelApiObject[this.list.name].handleRequestCancellation().signal : undefined,
+          });
+
+        return response.data;
     },
-    find: function (userId: number, cancel: boolean): Promise<FindUserResponseInterface> {
-        throw new Error("Function not implemented.")
+    find: async function (userId: number, cancel: boolean): Promise<FindUserResponseInterface> {
+        const uri:string = ['/users/list',userId].join('/')
+        const response:any = await api.request({
+            url: uri,
+            method: "GET",
+            data: {},
+            signal: cancel ? cancelApiObject[this.find.name].handleRequestCancellation().signal : undefined,
+          });
+
+        return response.data;
     },
-    create: function (payload: CreateUserInterface, cancel: boolean): Promise<FindUserResponseInterface> {
-        throw new Error("Function not implemented.")
+    create: async function (payload: CreateUserInterface, cancel: boolean): Promise<FindUserResponseInterface> {
+        const uri:string = '/users'        
+        const response:any = await api.request({
+            url: uri,
+            method: "POST",
+            data: payload,
+            signal: cancel ? cancelApiObject[this.create.name].handleRequestCancellation().signal : undefined,
+          });
+
+        return response.data;
     },
-    update: function (userId: number, payload: UpdateUserInterface, cancel: boolean): Promise<FindUserResponseInterface> {
-        throw new Error("Function not implemented.")
+    update: async function (userId: number, payload: UpdateUserInterface, cancel: boolean): Promise<FindUserResponseInterface> {
+        const uri:string = ['/users',userId].join('/')        
+        const response:any = await api.request({
+            url: uri,
+            method: "PATCH",
+            data: payload,
+            signal: cancel ? cancelApiObject[this.update.name].handleRequestCancellation().signal : undefined,
+          });
+
+        return response.data;
     },
-    remove: function (userId: number, cancel: boolean): Promise<ApiResponseInterface> {
-        throw new Error("Function not implemented.")
+    remove: async function (userId: number, cancel: boolean): Promise<ApiResponseInterface> {
+        const uri:string = ['/users',userId].join('/')      
+        const response:any = await api.request({
+            url: uri,
+            method: "DELETE",
+            data: {},
+            signal: cancel ? cancelApiObject[this.remove.name].handleRequestCancellation().signal : undefined,
+          });
+
+        return response.data;
     }
 }
 
