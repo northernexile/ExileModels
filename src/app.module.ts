@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {DevtoolsModule} from "@nestjs/devtools-integration";
+import { DevtoolsModule } from '@nestjs/devtools-integration';
 import { WiThrottleModule } from './wi-throttle/wi-throttle.module';
 import { WiThrottleMessagesModule } from './wi-throttle-messages/wi-throttle-messages.module';
 import { DirectoryService } from './directory/directory.service';
 import { SerialModule } from './serial/serial.module';
 import { SerialHandlerService } from './serial/serial-handler.service';
-import {SerialController} from "./serial/serial.controller";
+import { SerialController } from './serial/serial.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
@@ -20,10 +20,18 @@ import * as process from 'node:process';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { RoleGuard } from './auth/role/role.guard';
 import { UsersController } from './users/users.controller';
+import { ProductsController } from './products/products.controller';
+import { ProductsModule } from './products/products.module';
+import { RoleController } from './roles/role.controller';
+import { ProductsService } from './products/products.service';
+import { CategoriesModule } from './categories/categories.module';
+import { ProductCategoriesModule } from './product-categories/product-categories.module';
+import { ScalesModule } from './scales/scales.module';
+import { ProductScalesModule } from './product-scales/product-scales.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal:true}),
+    ConfigModule.forRoot({ isGlobal: true }),
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
     }),
@@ -34,8 +42,9 @@ import { UsersController } from './users/users.controller';
     UsersModule,
     RolesModule,
     UsersRolesModule,
+    ProductsModule,
     TypeOrmModule.forRootAsync({
-      imports:[ConfigModule],
+      imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
         host: configService.get('DATABASE_HOST'),
@@ -53,19 +62,31 @@ import { UsersController } from './users/users.controller';
     }),
     MailModule,
     JwtModule.registerAsync({
-      imports: [
-        ConfigModule,
-        MailModule
-      ],
+      imports: [ConfigModule, MailModule],
       useFactory: async (configService: ConfigService) => ({
-        global:true,
+        global: true,
         secret: process.env.JWT_SECRET,
         signOptions: { expiresIn: '1d' },
       }),
       inject: [ConfigService],
-    })
+    }),
+    CategoriesModule,
+    ProductCategoriesModule,
+    ScalesModule,
+    ProductScalesModule,
   ],
-  controllers: [AppController,SerialController, UsersController],
-  providers: [AppService, DirectoryService, SerialHandlerService,JwtStrategy,RoleGuard],
+  controllers: [
+    AppController,
+    SerialController,
+    UsersController,
+    RoleController,
+  ],
+  providers: [
+    AppService,
+    DirectoryService,
+    SerialHandlerService,
+    JwtStrategy,
+    RoleGuard,
+  ],
 })
 export class AppModule {}
