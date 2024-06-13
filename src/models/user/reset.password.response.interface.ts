@@ -1,5 +1,6 @@
 
 export interface ResetPasswordResponseInterface {
     code:number,
-    message:string
+    message:string,
+    data:any
 }
