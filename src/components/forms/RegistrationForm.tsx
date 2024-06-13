@@ -2,9 +2,12 @@ import { Grid, Button, TextField } from "@mui/material"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { RegistrationInterface } from "../../models/user/registration/registration.interface"
-import { join } from "path"
+import useAlert from "../alert/useAlert"
+import { RegistrationApi } from "../../services/api/user/registration.api"
 
 const RegistrationForm = () => {
+    const { setAlert } = useAlert() 
+    const registration = RegistrationApi;
     const [formData, setFormData] = useState({
         email:'',
         password:'',
@@ -22,6 +25,14 @@ const RegistrationForm = () => {
             confirm:formData.confirmPassword,
             username:[formData.firstNames,formData.lastName].join(' ')
         }
+
+        registration.register(registrationPayload,true).then(() => {
+            
+            setAlert('User '+formData.email+' registered','success');
+        }).catch(() => {
+            setAlert('Registration failed','error')
+        });
+
     }
 
     const handleChange = (event:any) => {
