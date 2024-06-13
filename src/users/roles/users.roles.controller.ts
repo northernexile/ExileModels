@@ -3,7 +3,6 @@ import {
   Delete,
   Get,
   HttpStatus,
-  Inject,
   Param,
   Post,
   ServiceUnavailableException,
@@ -12,13 +11,14 @@ import {
 import { UsersRolesService } from './users.roles.service';
 import { JwtAuthGuard } from '../../auth/jwt.guard';
 import { RoleGuard } from '../../auth/role/role.guard';
-import { ApiBearerAuth, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../../auth/roles/roles.decorator';
 import SuccessResponse from '../../services/responses/success.response';
 import { RolesService } from '../../roles/roles.service';
 import customResponse from '../../services/responses/custom.response';
 
 @Controller(['user/roles'])
+@ApiTags('users', 'roles')
 export class UsersRolesController {
   constructor(
     private userRolesService: UsersRolesService,

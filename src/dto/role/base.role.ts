@@ -3,10 +3,10 @@ import { Column } from 'typeorm';
 
 export class BaseRoleDto {
   @ApiProperty()
-  @Column({ type: 'int',nullable:true })
+  @Column({ type: 'int', nullable: true })
   id?: number;
 
   @ApiProperty()
-  @Column({ type: 'varchar' ,nullable:false})
+  @Column({ type: 'varchar', nullable: false })
   name: string;
 }

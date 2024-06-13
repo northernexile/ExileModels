@@ -15,7 +15,13 @@ import {
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RoleGuard } from '../auth/role/role.guard';
-import { ApiBearerAuth, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Roles } from '../auth/roles/roles.decorator';
 import SuccessResponse from '../services/responses/success.response';
 import userResponse from './user.response';
@@ -23,6 +29,7 @@ import { CreateUserDto } from '../dto/user/create.user';
 import { UpdateUserDto } from '../dto/user/update.user';
 
 @Controller('users')
+@ApiTags('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
@@ -35,6 +42,7 @@ export class UsersController {
   })
   @UseGuards(JwtAuthGuard)
   @Roles('Admin')
+  @ApiOperation({ summary: 'List users' })
   async findAll() {
     return SuccessResponse('list of users', await this.usersService.findAll());
   }
@@ -53,6 +61,7 @@ export class UsersController {
   })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin')
+  @ApiOperation({ summary: 'Find a user by Id' })
   async getById(@Param('userId') userId: number) {
     const user = await this.usersService.findOneById(userId);
 
@@ -75,6 +84,7 @@ export class UsersController {
   })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin')
+  @ApiOperation({ summary: 'Create user' })
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.create(createUserDto);
 
@@ -101,14 +111,18 @@ export class UsersController {
     description: 'Update a user',
   })
   @ApiParam({
-    name: 'userId',
+    name: 'id',
     description: 'The user id',
     required: true,
     type: 'Number',
   })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin')
-  async update(userId: number, @Body() updateUserDto: UpdateUserDto) {
+  @ApiOperation({ summary: 'Update a user' })
+  async update(
+    @Param('userId') userId: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     const user = await this.usersService.update(userId, updateUserDto);
 
     if (!user) {
@@ -137,14 +151,15 @@ export class UsersController {
     description: 'delete a user',
   })
   @ApiParam({
-    name: 'userId',
+    name: 'id',
     description: 'The user id',
     required: true,
     type: 'Number',
   })
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles('Admin')
-  async delete(userId: number) {
+  @ApiOperation({ summary: 'Delete a user' })
+  async delete(@Param('userId') userId: number) {
     const deleted = await this.usersService.delete(userId);
 
     if (!deleted) {
