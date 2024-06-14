@@ -60,7 +60,7 @@ const RegistrationForm = () => {
                 sx={{marginBottom:1}}
                 label="Last name"
                 variant="outlined"
-                name="firstNames"
+                name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
                 type="text"
