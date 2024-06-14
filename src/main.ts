@@ -24,7 +24,7 @@ async function bootstrap() {
       'http://localhost:5173',
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    credentials: false,
+    credentials: true,
   });
 
   const config = new DocumentBuilder()
