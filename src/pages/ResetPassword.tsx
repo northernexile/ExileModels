@@ -9,7 +9,7 @@ const ResetPassword = () => {
             <StandardGrid>
                 <TitledParagraph
                     title="Reset Your Password"
-                    paragraph="Enter your email in the form below to receive an email in your inbox to allow you to rest your password."    
+                    paragraph="Enter your email in the form below to receive an email in your inbox to allow you to reset your password."    
                 />
                 <ResetPasswordForm />
             </StandardGrid>
