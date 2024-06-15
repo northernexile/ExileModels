@@ -4,14 +4,14 @@ import { FindUserResponseInterface } from "../../../models/user/find.user.respon
 import { UpdateUserInterface } from "../../../models/user/update.user.interface"
 import { UserApiInterface } from "../../../models/user/user.api.interface"
 import { UserListResponseInterface } from "../../../models/user/user.list.interface.response"
-import { api } from "../config/axios.config"
+import { apiSecure } from "../config/axios.secure.config"
 import { defineCancelApiObject } from "../config/define.cancel.api.object"
 
 
 export const UserApi:UserApiInterface = {
     list: async function (cancel: boolean): Promise<UserListResponseInterface> {
         const uri:string = '/users/list'
-        const response:any = await api.request({
+        const response:any = await apiSecure.request({
             url: uri,
             method: "GET",
             data: {},
@@ -22,7 +22,7 @@ export const UserApi:UserApiInterface = {
     },
     find: async function (userId: number, cancel: boolean): Promise<FindUserResponseInterface> {
         const uri:string = ['/users/list',userId].join('/')
-        const response:any = await api.request({
+        const response:any = await apiSecure.request({
             url: uri,
             method: "GET",
             data: {},
@@ -33,7 +33,7 @@ export const UserApi:UserApiInterface = {
     },
     create: async function (payload: CreateUserInterface, cancel: boolean): Promise<FindUserResponseInterface> {
         const uri:string = '/users'        
-        const response:any = await api.request({
+        const response:any = await apiSecure.request({
             url: uri,
             method: "POST",
             data: payload,
@@ -44,7 +44,7 @@ export const UserApi:UserApiInterface = {
     },
     update: async function (userId: number, payload: UpdateUserInterface, cancel: boolean): Promise<FindUserResponseInterface> {
         const uri:string = ['/users',userId].join('/')        
-        const response:any = await api.request({
+        const response:any = await apiSecure.request({
             url: uri,
             method: "PATCH",
             data: payload,
@@ -55,7 +55,7 @@ export const UserApi:UserApiInterface = {
     },
     remove: async function (userId: number, cancel: boolean): Promise<ApiResponseInterface> {
         const uri:string = ['/users',userId].join('/')      
-        const response:any = await api.request({
+        const response:any = await apiSecure.request({
             url: uri,
             method: "DELETE",
             data: {},
