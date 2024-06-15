@@ -19,7 +19,7 @@ const LoginForm = () => {
     const handleSubmit = (event:any) => {
         event.preventDefault()
         console.log(formData)
-        loginApi.login(formData,true).then((response)=>{
+        loginApi.login(formData,true).then((response:any)=>{
             const tokenResponse = response.data?.access_token;
             const userData = JSON.stringify(response.data?.user);
 
@@ -28,7 +28,7 @@ const LoginForm = () => {
             }
 
             if(userData) {
-                Cookies.set('userRole',userData)
+                Cookies.set('userRole',userData,{expires:7,secure:true})
             }
 
             setAlert('Logged in','success');

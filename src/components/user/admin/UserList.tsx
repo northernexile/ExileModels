@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { UserApi } from "../../../services/api/user/user.api";
 import useAlert from "../../alert/useAlert";
+import { Box, CircularProgress } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { UserListColumnCollection } from "./UserListColumnCollection";
 
 
 
@@ -9,16 +12,48 @@ const UserList = () => {
     const { setAlert } = useAlert();
 
     useEffect(() => {
-        UserApi.list(true).then((users)=>{
-            console.log(users)
-        }).catch((error) =>{
-            console.error(error)
-            console.log(error.message)
-            setAlert(error.message,"error")
-        })
+        if(!users.length){
+          UserApi.list(false).then((usersResponse)=>{
+              console.log(usersResponse.data)
+              setUsers(usersResponse.data)
+          }).catch((error) =>{
+              console.error(error)
+              console.log(error.message)
+              setAlert(error.message,"error")
+          })
+        }
     })
 
-    return (<>List of users</>)
+    const hasUsers = () => {
+        return users.length
+    }
+
+    const columns: GridColDef<(typeof users)[number]>[] = UserListColumnCollection.columns
+
+
+
+    if(hasUsers()) {
+        return (<Box>
+            <DataGrid
+        rows={users}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+        checkboxSelection
+        disableRowSelectionOnClick
+      />
+        </Box>)
+        
+    }
+
+    return <CircularProgress />
+    
 }
 
 export default UserList;
