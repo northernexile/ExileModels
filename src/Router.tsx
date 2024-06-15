@@ -17,6 +17,13 @@ import Admin from './pages/admin/Admin';
 import Profile from './pages/Profile';
 import Account from './pages/Account';
 import Logout from './pages/Logout';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminRoles from './pages/admin/Roles';
+import AdminScales from './pages/admin/AdminScales';
+import AdminModels from './pages/admin/AdminModels';
+import AdminBlog from './pages/admin/AdminBlog';
+import AdminOrders from './pages/admin/AdminOrders';
+import AdminContact from './pages/admin/AdminContact';
 
 export const Router = () => {
 
@@ -39,6 +46,13 @@ export const Router = () => {
                 <Route path='/admin' element={<Admin />} />
                 <Route path='/profile' element={<Profile/>} />
                 <Route path='/admin' element={<Admin />} />
+                <Route path='/admin/users' element={<AdminUsers />} />
+                <Route path='/admin/roles' element={<AdminRoles />} />
+                <Route path='/admin/scales' element={<AdminScales />} />
+                <Route path='/admin/models' element={<AdminModels />} />
+                <Route path='/admin/blog' element={<AdminBlog />} />
+                <Route path='/admin/orders' element={<AdminOrders />} />
+                <Route path='/admin/contact' element={<AdminContact />} />
                 <Route path='/logout' element={<Logout />} />
             </Route>
         </Routes>

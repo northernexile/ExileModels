@@ -6,7 +6,6 @@ const AdminMainMenu:MenuItemCollectionInterface = {
         {title:'Users',path:'/admin/users'},
         {title:'Roles',path:'/admin/roles'},
         {title:'Scales',path:'admin/scales'},
-        {title:'Roles',path:'/admin/roles'},
         {title:'Models',path:'/admin/models'},
         {title:'Blog',path:'/admin/blog'},
         {title:'Contact',path:'/admin/contact'},
