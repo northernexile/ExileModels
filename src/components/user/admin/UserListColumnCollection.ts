@@ -4,9 +4,9 @@ import { CreatedAt } from "../../../models/data/created.at";
 import { Identity } from "../../../models/data/identity";
 import { UpdatedAt } from "../../../models/data/updated.at";
 import { Username } from "../../../models/data/username";
-import { VerifiedAt } from "../../../models/data/verified.at";
-import { EditAction } from "../../../models/data/edit.action";
 import { DeleteAction } from "../../../models/data/delete.action";
+import { UserEditAction } from "./user.edit.action";
+import { VerifiedAt } from "../../../models/data/verified.at";
 
 export const UserListColumnCollection:ColumnCollectionInterface = {
     columns:[
@@ -16,7 +16,7 @@ export const UserListColumnCollection:ColumnCollectionInterface = {
         CreatedAt,
         UpdatedAt,
         VerifiedAt,
-        EditAction,
+        UserEditAction,
         DeleteAction
     ]
 }

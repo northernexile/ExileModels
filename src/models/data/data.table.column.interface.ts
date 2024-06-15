@@ -5,4 +5,5 @@ export interface DataTableColumnInterface {
     width:number
     valueGetter?:any | null
     renderCell?:any |null
+    disableEventClickBubbling?: boolean|null
 }
