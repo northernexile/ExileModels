@@ -5,8 +5,6 @@ import { Box, CircularProgress } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { UserListColumnCollection } from "./UserListColumnCollection";
 
-
-
 const UserList = () => {
     const [users,setUsers] = useState([])
     const { setAlert } = useAlert();
@@ -14,11 +12,9 @@ const UserList = () => {
     useEffect(() => {
         if(!users.length){
           UserApi.list(false).then((usersResponse)=>{
-              console.log(usersResponse.data)
               setUsers(usersResponse.data)
           }).catch((error) =>{
               console.error(error)
-              console.log(error.message)
               setAlert(error.message,"error")
           })
         }

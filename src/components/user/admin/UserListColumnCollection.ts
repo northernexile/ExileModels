@@ -5,6 +5,8 @@ import { Identity } from "../../../models/data/identity";
 import { UpdatedAt } from "../../../models/data/updated.at";
 import { Username } from "../../../models/data/username";
 import { VerifiedAt } from "../../../models/data/verified.at";
+import { EditAction } from "../../../models/data/edit.action";
+import { DeleteAction } from "../../../models/data/delete.action";
 
 export const UserListColumnCollection:ColumnCollectionInterface = {
     columns:[
@@ -13,6 +15,8 @@ export const UserListColumnCollection:ColumnCollectionInterface = {
         Email,
         CreatedAt,
         UpdatedAt,
-        VerifiedAt
+        VerifiedAt,
+        EditAction,
+        DeleteAction
     ]
 }

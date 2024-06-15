@@ -4,4 +4,5 @@ export interface DataTableColumnInterface {
     headerName:string
     width:number
     valueGetter?:any | null
+    renderCell?:any |null
 }
