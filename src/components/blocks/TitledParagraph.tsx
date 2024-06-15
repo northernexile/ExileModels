@@ -1,6 +1,8 @@
 import { Typography } from "@mui/material";
 
 const TitledParagraph = ({title,paragraph}:any) => {
+
+
     return (<>
     <Typography
         sx={{marginBottom:2}}

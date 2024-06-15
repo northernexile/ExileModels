@@ -7,23 +7,14 @@ import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
 import Cookies from 'js-cookie';
 import UserProfile from './user/profile/UserProfile';
-import Profile from '../pages/Profile';
 import { ProfileInterface } from "../models/user/profile/profile.interface";
+import { MenuItemInterface } from "../models/menu/menu.item.interface";
+import { MenusInterface } from "../models/menu/menus.interface";
 
-const ExileAppBar = () => {
+const ExileAppBar = ({mainMenu,settingsMenu}:MenusInterface) => {
 
- const links = [
-    {title:'Models',path:'/models'},
-    {title:'Web Throttle',path:'/throttle'},
-    {title:'Blog',path:'/blog'},
-    {title:'Contact',path:'/contact'},
-    {title:'About',path:'/about'}
-  ]
- const profileSettings = [
-    {title:'Profile',path:'/profile'},
-    {title:'Account',path:'/account'},
-    {title:'Dashboard',path:'/admin'},
-  ]
+ const links:MenuItemInterface[] = mainMenu.items
+ const profileSettings:MenuItemInterface[] = settingsMenu.items
 
   const getAccessToken = () => {
     const token:any = Cookies.get('token');

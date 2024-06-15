@@ -1,18 +1,18 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { DefaultTheme } from './theme/DefaultTheme';
-import PublicPage from './PublicPage';
+import AdminPage from './AdminPage';
 
-const PublicLayout = ({children} :any) => {
+const AdminLayout = ({children} :any) => {
 
       const defaultTheme = DefaultTheme;
 
     return(
         <ThemeProvider theme={defaultTheme}>
-          <PublicPage>
+          <AdminPage>
             {children}
-          </PublicPage>
+          </AdminPage>
         </ThemeProvider>
     )
 }
 
-export default PublicLayout;
+export default AdminLayout;

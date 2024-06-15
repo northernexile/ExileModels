@@ -36,6 +36,7 @@ export const Router = () => {
             <Route path='/reminder/verify' element={<VerifyReminder />} /> 
             <Route element={<ProtectedRoute />}>
                 <Route path='/account' element={<Account />} />
+                <Route path='/admin' element={<Admin />} />
                 <Route path='/profile' element={<Profile/>} />
                 <Route path='/admin' element={<Admin />} />
                 <Route path='/logout' element={<Logout />} />
