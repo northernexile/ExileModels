@@ -18,7 +18,7 @@ import Profile from './pages/Profile';
 import Account from './pages/Account';
 import Logout from './pages/Logout';
 import AdminUsers from './pages/admin/AdminUsers';
-import AdminRoles from './pages/admin/Roles';
+import AdminRoles from './pages/admin/AdminRoles';
 import AdminScales from './pages/admin/AdminScales';
 import AdminModels from './pages/admin/AdminModels';
 import AdminBlog from './pages/admin/AdminBlog';

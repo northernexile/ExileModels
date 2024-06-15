@@ -1,9 +1,16 @@
 import AdminLayout from "../../components/AdminLayout";
+import StandardGrid from "../../components/StandardGrid";
+import TitledParagraph from "../../components/blocks/TitledParagraph";
 
 const AdminContact = () => {
     return (
-       <AdminLayout>
-            Contact
+        <AdminLayout>
+            <StandardGrid>
+                <TitledParagraph
+                    title="Contact (Admin)"
+                    paragraph="Manage contact form enquiries"
+                />
+            </StandardGrid>
        </AdminLayout>
     )
 }

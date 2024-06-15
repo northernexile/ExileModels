@@ -5,7 +5,7 @@ const AdminMainMenu:MenuItemCollectionInterface = {
         {title:'Dashboard',path:'/admin'},
         {title:'Users',path:'/admin/users'},
         {title:'Roles',path:'/admin/roles'},
-        {title:'Scales',path:'admin/scales'},
+        {title:'Scales',path:'/admin/scales'},
         {title:'Models',path:'/admin/models'},
         {title:'Blog',path:'/admin/blog'},
         {title:'Contact',path:'/admin/contact'},
