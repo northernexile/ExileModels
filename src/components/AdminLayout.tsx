@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { DefaultTheme } from './theme/DefaultTheme';
 import AdminPage from './AdminPage';
+import Confirm from './dialog/Confirm';
 
 const AdminLayout = ({children} :any) => {
 
@@ -8,6 +9,7 @@ const AdminLayout = ({children} :any) => {
 
     return(
         <ThemeProvider theme={defaultTheme}>
+          <Confirm />
           <AdminPage>
             {children}
           </AdminPage>

@@ -1,12 +1,18 @@
 import { Button } from "@mui/material";
-import { DataTableColumnInterface } from "./data.table.column.interface";
-
+import { DataTableColumnInterface } from "../../../models/data/data.table.column.interface";
+import { confirmDialog } from "../../dialog/Confirm";
 const renderDeleteButton = (params:any) => {
-    const path = '/admin/users/edit/' + params.row.id
+    const path = '/admin/users/delete/' + params.row.id
     return <Button
         variant="contained"
         size="small"
         color="primary"
+        onClick={() => {
+            console.log(path)
+            confirmDialog('Delete user?',()=>
+                console.log('deleting '+path)
+            )
+        }}
     >Delete</Button>
 }
 

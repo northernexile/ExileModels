@@ -45,4 +45,11 @@ const Confirm = () => {
     )
 }
 
-export default Confirm;
+export default Confirm
+
+export const confirmDialog = (message:any, onSubmit:any) => {
+    useConfirmDialogStore.setState({
+      message,
+      onSubmit,
+    });
+};
