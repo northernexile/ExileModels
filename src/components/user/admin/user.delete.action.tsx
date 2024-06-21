@@ -21,8 +21,11 @@ const renderDeleteButton = (params:any) => {
 
 const deleteItem = (id:number) => {
     const userApi = UserApi;
+    
 
     userApi.remove(id,true).then(()=>{
+        close()
+        window.location.href = '/admin/users'
     }).catch(()=>{
         console.error("Could not remove user");
     })
