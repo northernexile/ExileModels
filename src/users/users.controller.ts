@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -144,14 +145,14 @@ export class UsersController {
     return userResponse(HttpStatus.NO_CONTENT, 'Updated user', userInfo);
   }
 
-  @Delete(':id')
+  @Delete(':userId')
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.NO_CONTENT,
     description: 'delete a user',
   })
   @ApiParam({
-    name: 'id',
+    name: 'userId',
     description: 'The user id',
     required: true,
     type: 'Number',
@@ -160,6 +161,14 @@ export class UsersController {
   @Roles('Admin')
   @ApiOperation({ summary: 'Delete a user' })
   async delete(@Param('userId') userId: number) {
+    console.log(userId);
+    if (!userId) {
+      throw new BadRequestException({
+        code: HttpStatus.BAD_REQUEST,
+        message: 'Please supply userId',
+      });
+    }
+
     const deleted = await this.usersService.delete(userId);
 
     if (!deleted) {
